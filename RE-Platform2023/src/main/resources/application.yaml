@@ -1,0 +1,46 @@
+#server ??
+server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    path: /error
+    whitelabel:
+      enabled: false
+  port: 9000
+  domain: localhost:9000
+
+spring:
+  application:
+    name: RePlatform2023
+  devtools:
+    livereload:
+      enabled: true
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      pool-name: hikari-cp
+      maximum-pool-size: 10
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        lazyLoadingEnabled: true
+
+
+
+
+

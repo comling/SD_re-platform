@@ -1,0 +1,35 @@
+<header id="header" th:fragment="headerFragment">
+    <div class="header_in w1200">
+        <h1>로고</h1>
+
+        <!--S::메뉴 영역-->
+        <div id="menu">
+            <ul class="menu_in">
+                <li><a>공지사항</a></li>
+                <li><a>지역별 설치현황</a></li>
+                <li><a>사업별 설치현황</a></li>
+                <li><a>설치분포지도</a></li>
+                <li><a>A/S 이력</a></li>
+                <li><a>고객지원</a></li>
+            </ul>
+        </div>
+        <!--E::메뉴 영역-->
+
+        <!--S::검색 영역-->
+        <div id="searchZone">
+            <select class="input_style">
+                <option>지역</option>
+                <option>이름</option>
+                <option>연도</option>
+                <option>사업</option>
+            </select>
+
+            <div class="searchBox">
+                <input type="text" class="input_style">
+                <i class="fas fa-search searchBtn"></i>
+            </div>
+        </div>
+        <!--E::검색 영역-->
+
+    </div>
+</header>

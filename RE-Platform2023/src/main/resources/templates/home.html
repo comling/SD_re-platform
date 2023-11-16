@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+
+    <link rel="stylesheet" th:href="@{/css/comm.css}">
+    <link rel="stylesheet" th:href="@{/lib/fontawesome/all.min.css}">
+</head>
+<body>
+
+        <!--S::header-->
+        <div th:replace="~{/header :: headerFragment}"></div>
+        <!--E::header-->
+
+        <!--S::body-->
+        <div th:replace="~{/content :: contentFragment}">
+
+        </div>
+        <!--E::body-->
+
+        <!--S::footer-->
+        <div th:replace="~{/footer :: footerFragment}"></div>
+        <!--E::footer-->
+</body>
+</html>

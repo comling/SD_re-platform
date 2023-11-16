@@ -1,0 +1,34 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+@import url("font.css");
+
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;line-height:138%;letter-spacing:normal;}
+body,html{width:100%; font-size:16px; color:#666; font-weight: 400; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;}
+*{font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+ol,ul,li{list-style:none;}
+
+.w1200{max-width:1200px; margin:0 auto; box-sizing:border-box; padding:0 25px;}
+
+#header {position:relative; border-bottom:1px solid #EEEEEE;}
+#header .header_in {display:flex; padding-top:10px; padding-bottom:10px;}
+#header .header_in h1{display:inline-block; width: 160px; padding:10px; transition:padding 0.2s linear;}
+
+#menu{position:relative; z-index:700; align-self: center;}
+#menu > .menu_in{display:flex; }
+#menu > .menu_in > li{flex:1; text-align:center; position:relative; width: 100px; align-self: center;}
+#menu > .menu_in > li > a{display:block; font-size:0.95rem; color:#222222; font-weight:600; padding:10px; word-break: keep-all;}
+#menu > .menu_in > li dl{position:absolute; z-index:705; top:60px;  box-sizing:border-box; height:0; overflow:hidden; width:100%; transition:all 0.2s linear;}
+
+#searchZone {display: flex;align-items: center;justify-content: space-around;width: 260px;}
+#searchZone > select, input {height: 30px;}
+#searchZone > .searchBox {display: flex;}
+#searchZone > .searchBox > .searchBtn {position: relative;right: 25px;align-self: center;}
+#searchZone > .searchBox > input{display:block;  padding-right: 30px; width: 120px;}
+#searchZone > .searchBtn:hover{background:#2B5BE1; border:2px solid #2B5BE1; transition:all 0.2s linear;}
+
+.input_style {border: 1px solid #ddd;border-radius: 5px;padding: 0 5px;font-size: 1rem;}
+
+.main-content {min-height: 800px;}
+
+footer > .footer {background: #eaeaea;}
+footer > .footer .container {display: flex;justify-content: space-between;align-items: flex-start;}
