@@ -11,7 +11,7 @@ ol,ul,li{list-style:none;}
 
 #header {position:relative; border-bottom:1px solid #EEEEEE;}
 #header .header_in {display:flex; padding-top:10px; padding-bottom:10px;}
-#header .header_in h1{display:inline-block; width: 160px; padding:10px; transition:padding 0.2s linear;}
+#header .header_in h1{display:inline-block; width: 270px; padding:10px; transition:padding 0.2s linear;}
 
 #menu{position:relative; z-index:700; align-self: center;}
 #menu > .menu_in{display:flex; }
@@ -28,7 +28,52 @@ ol,ul,li{list-style:none;}
 
 .input_style {border: 1px solid #ddd;border-radius: 5px;padding: 0 5px;font-size: 1rem;}
 
-.main-content {min-height: 800px;}
+footer > .footer {background: #eaeaea; height: 150px;padding: 20px;}
+footer > .footer .container {display: flex; justify-content: space-between; align-items: center;}
+footer > .footer .footer-text {margin-top: 5px; margin-bottom: 10px;}
+footer > .footer .footer-text:first-child {color:#0f53a8;}
+footer > .footer .footer-link {text-decoration:none; color: #656565;}
 
-footer > .footer {background: #eaeaea;}
-footer > .footer .container {display: flex;justify-content: space-between;align-items: flex-start;}
+footer > .slider-container{border-top: 1px solid #EEEEEE;}
+footer > .slider-container .slider-wrapper{width:1200px; height:40px;margin:0px auto; overflow:hidden; padding: 10px;}
+footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;display:inline-block; text-align: center;}
+
+
+.flex {display: flex;}
+.flex-end {align-items: flex-end;}
+
+.main-content {margin-top: 15px; min-height: 630px;}
+.main-content .main-left {width: 350px; min-width: 350px; max-width: 350px;}
+.main-content .main-right {width: calc(100% - 350px);}
+
+.main-content .main-card-sector {border: 1px solid #656565; border-radius: 10px; width: 280px; height: 120px; padding: 10px; margin-bottom: 15px;}
+.main-content .main-card-sector > .tit-main { color:#0f53a8; margin-bottom: 5px;}
+.main-content .main-card-sector > .tit-sub { font-weight: 600; font-size: 15px; margin-bottom: 5px;}
+.main-content .main-card-sector > .total-area > span {margin: 5px;}
+.main-content .main-card-sector > .total-area > span:nth-child(1), span:nth-child(2) {font-size: 10px;}
+.main-content .main-card-sector > .total-area > span:nth-child(4) {font-size: 13px; font-weight: 700; color: black;}
+.main-content .main-card-sector > .total-area > p {font-size:20px; font-weight: 700; color: black;}
+.main-content .main-card-sector > .total-area > p > img{width: 50px;}
+
+.main-content .main-card-sector-notice {height: 280px;}
+.main-content .main-card-sector-notice > .tit-main{ color: black; margin-bottom: 5px;}
+.main-content .main-card-sector-notice > .notice-article {margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid #656565; padding: 10px;}
+.main-content .main-card-sector-notice > .notice-article > span:nth-child(1) {font-size: 10px;}
+.main-content .main-card-sector-notice > .notice-article > span:nth-child(3) {font-size: 12px;}
+.main-content .main-card-sector-notice > .notice-article:nth-child(4) {border-bottom: none;}
+
+.main-content .main-card-sector-notice > .notice-footer {text-align: center;}
+
+.height-60 {height: 60px;}
+
+/*** S::Table***/
+.table {width:100%; border-collapse: collapse;}
+.basicTable table {border-top:1px solid #4A506B;}
+.basicTable table thead th {background: #f8f8f8; text-align: center; padding:10px; color:#222; font-size:0.875rem; word-break: keep-all; font-weight: 500; white-space:nowrap;}
+.basicTable table tbody td {border-bottom:1px solid #e5e5e5; padding:10px; text-align: center; color:#444; font-size:0.8125rem; word-break: keep-all;}
+.basicTable table tbody td.text-left {text-align: left;}
+.basicTable table tbody td.text-right {text-align: right;}
+.basicTable table tbody tr:hover {background:#f8f8f8}
+.basicTable table tbody th {background: #f9f9f9; border-bottom:1px solid #e5e5e5; color:#444; font-size:0.875rem; padding-left:15px;}
+.basicTable table tbody td .input_style {height:34px; margin:0 1px;}
+.basicTable table tbody td .btn {padding: 0 10px}
