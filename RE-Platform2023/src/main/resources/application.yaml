@@ -7,12 +7,13 @@ server:
     whitelabel:
       enabled: false
   port: 9000
-  domain: localhost:9000
 
 spring:
   application:
     name: RePlatform2023
   devtools:
+    restart:
+      enabled: false
     livereload:
       enabled: true
 
@@ -25,11 +26,8 @@ spring:
     mode: HTML
 
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
     hikari:
+      sdf:
       pool-name: hikari-cp
       maximum-pool-size: 10
       minimum-idle: 2
@@ -39,7 +37,28 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
         lazyLoadingEnabled: true
+      jdbc-url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100
 
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace #show parameter binding
+      SQL: DEBUG
 
 
 
