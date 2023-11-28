@@ -27,7 +27,6 @@ spring:
 
   datasource:
     hikari:
-      sdf:
       pool-name: hikari-cp
       maximum-pool-size: 10
       minimum-idle: 2
@@ -42,6 +41,7 @@ spring:
       url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
+      connection-test-query: SELECT NOW() FROM dual
   jpa:
     generate-ddl: false
     show-sql: true
@@ -55,6 +55,11 @@ spring:
         format_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 100
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*Mapper.xml
 
 logging:
   level:

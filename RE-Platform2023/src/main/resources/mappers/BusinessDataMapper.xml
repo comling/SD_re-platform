@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.techdna.replatform2023.mapper.BusinessDataMapper">
+
+    <!-- SELECT 결과 Map -->
+    <resultMap id="BusinessDataResultMap" type="kr.techdna.replatform2023.dto.ResBusinessData">
+        <result property="userID"                 column="UserID" />
+        <result property="BYEAR"                  column="BYEAR" />
+        <result property="BNAME"                  column="BNAME" />
+        <result property="organization"           column="Organization" />
+        <result property="department"             column="Department" />
+        <result property="applicantName"          column="ApplicantName" />
+        <result property="applicantPhone"         column="ApplicantPhone" />
+        <result property="capacity"               column="Capacity" />
+        <result property="applicantAddress"       column="ApplicantAddress" />
+        <result property="address"                column="Address" />
+        <result property="roadAddress"            column="RoadAddress" />
+        <result property="bCode"                  column="Bcode" />
+        <result property="hCode"                  column="Hcode" />
+        <result property="sigungu"                column="Sigungu" />
+        <result property="eupMyeon"               column="EupMyeon" />
+        <result property="dong"                   column="Dong" />
+        <result property="energy"                 column="Energy" />
+        <result property="installType"            column="InstallType" />
+        <result property="constructionCompany"    column="ConstructionCompany" />
+        <result property="facilityType"           column="FacilityType" />
+        <result property="monitoring"             column="Monitoring" />
+        <result property="constructionNumber"     column="ConstructionNumber" />
+        <result property="entX"                   column="entX" />
+        <result property="entY"                   column="entY" />
+    </resultMap>
+
+    <!-- WHERE 조건 -->
+    <sql id="conditions">
+        <where>
+            <if test="keyword != null and keyword.equals('') == false">
+            <choose>
+                <when test="searchType == null or searchType.equals('')">
+                 (
+                    Sigungu LIKE CONCAT('%', #{keyword}, '%')
+                   OR BYEAR LIKE CONCAT('%', #{keyword}, '%')
+                   OR BNAME LIKE CONCAT('%', #{keyword}, '%')
+                   OR ApplicantName LIKE CONCAT('%', #{keyword}, '%')
+                )
+                </when>
+                <otherwise>
+                    <choose>
+                        <when test="searchType.equals('sigungu')">
+                        Sigungu LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+
+                        <when test="searchType.equals('BYEAR')">
+                        BYEAR LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+
+                        <when test="searchType.equals('BNAME')">
+                        BNAME LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+
+                        <when test="searchType.equals('applicantName')">
+                        ApplicantName LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </otherwise>
+            </choose>
+            </if>
+        </where>
+    </sql>
+
+    <!-- 게시글 수 조회 -->
+    <select id="count" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            Business_data
+        <include refid="conditions" />
+    </select>
+
+    <!-- 게시글 리스트 조회 -->
+    <select id="getBusinessDataList" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
+        SELECT
+            *
+        FROM
+            Business_data
+        <include refid="conditions" />
+        ORDER BY
+            UserID DESC, BYEAR DESC
+        LIMIT #{pagination.limitStart}, #{size}
+    </select>
+
+    <!-- 조회기간 설정용 min, max 값 -->
+    <select id="getMinMaxYear" resultType="hashMap">
+        SELECT MIN(BYEAR) as MIN, MAX(BYEAR) as MAX
+        FROM Business_data
+    </select>
+
+    <!-- 전체 합계 -->
+    <select id="getSumCapacity" resultType="long">
+        SELECT
+            SUM(Capacity)
+        FROM
+            Business_data
+    </select>
+
+</mapper>

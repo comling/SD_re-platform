@@ -1,13 +1,12 @@
 package kr.techdna.replatform2023.test;
 
 import jakarta.persistence.EntityNotFoundException;
-import kr.techdna.replatform2023.dto.UserData;
+import kr.techdna.replatform2023.domain.UserData;
 import kr.techdna.replatform2023.repository.UserDataRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 @SpringBootTest
 public class UserDataRepositoryTest {

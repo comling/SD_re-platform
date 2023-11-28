@@ -1,4 +1,4 @@
-package kr.techdna.replatform2023.dto;
+package kr.techdna.replatform2023.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

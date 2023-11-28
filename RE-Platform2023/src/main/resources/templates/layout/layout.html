@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <title>RE-Platform</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/comm.css}">
+    <link rel="stylesheet" th:href="@{/lib/fontawesome/all.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/swiper.css}">
+    <script type="text/javascript" th:src="@{/js/swiper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/lib/angularjs/angular-1.7.7.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/ng-common.js}"></script>
+    <script type="text/javascript" th:src="@{/js/mainController.js}"></script>
+
+
+    <!-- footer slide 용 slick lib 추가 -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+
+</head>
+<body ng-app="app" ng-controller="MainController">
+
+        <!-- 로딩 바	-->
+        <div id="loading" class="loading">
+            <div class="justify_center" style="height: 100%;">
+                <div style="display: flex;justify-content: center; align-items: center; flex-direction:column;position: relative;top: 30%;">
+                    <img style="width:500px; margin-bottom: 20px;" src="" alt="">
+                    <h2>{{loadingText ? loadingText : "데이터를 불러 오는 중 입니다."}}</h2>
+                </div>
+                <div class="loader"></div>
+            </div>
+        </div>
+
+
+        <!--S::header-->
+        <th:block th:replace="/layout/header::headerFragment"></th:block>
+        <!--E::header-->
+
+        <!--S::body-->
+        <th:block layout:fragment="content"></th:block>
+        <!--E::body-->
+
+        <!--S::footer-->
+        <th:block th:replace="/layout/footer::footerFragment"></th:block>
+        <!--E::footer-->
+
+
+        <!--/* JavaScript 영역 */-->
+        <th:block layout:fragment="script"></th:block>
+</body>
+</html>

@@ -6,6 +6,8 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 body,html{width:100%; font-size:16px; color:#666; font-weight: 400; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;}
 *{font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
 ol,ul,li{list-style:none;}
+a{cursor: pointer;}
+a:hover{opacity: 80%;}
 
 .w1200{max-width:1200px; margin:0 auto; box-sizing:border-box; padding:0 25px;}
 
@@ -17,12 +19,13 @@ ol,ul,li{list-style:none;}
 #menu > .menu_in{display:flex; }
 #menu > .menu_in > li{flex:1; text-align:center; position:relative; width: 100px; align-self: center;}
 #menu > .menu_in > li > a{display:block; font-size:0.95rem; color:#222222; font-weight:600; padding:10px; word-break: keep-all;}
+#menu > .menu_in > li > a:hover{cursor: pointer; color: #007aff;}
 #menu > .menu_in > li dl{position:absolute; z-index:705; top:60px;  box-sizing:border-box; height:0; overflow:hidden; width:100%; transition:all 0.2s linear;}
 
 #searchZone {display: flex;align-items: center;justify-content: space-around;width: 260px;}
 #searchZone > select, input {height: 30px;}
-#searchZone > .searchBox {display: flex;}
-#searchZone > .searchBox > .searchBtn {position: relative;right: 25px;align-self: center;}
+#searchZone > .searchBox {display: flex; align-items: center;}
+#searchZone > .searchBox > a > .searchBtn {position: relative;right: 25px;align-self: center;}
 #searchZone > .searchBox > input{display:block;  padding-right: 30px; width: 120px;}
 #searchZone > .searchBtn:hover{background:#2B5BE1; border:2px solid #2B5BE1; transition:all 0.2s linear;}
 
@@ -77,3 +80,16 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .basicTable table tbody th {background: #f9f9f9; border-bottom:1px solid #e5e5e5; color:#444; font-size:0.875rem; padding-left:15px;}
 .basicTable table tbody td .input_style {height:34px; margin:0 1px;}
 .basicTable table tbody td .btn {padding: 0 10px}
+
+.loading {display:none;width: 100%;height: 100%;position: fixed;left: 0px;top: 0px;background: #fff;z-index: 9999;text-align: center;line-height: 100%;opacity: 0.8;}
+.loader {position: absolute;left: 50%;top: 55%;z-index: 11;width: 120px;height: 120px;margin: -76px 0 0 -76px;border: 16px solid #f3f3f3;border-radius: 50%;border-top: 16px solid #3498db;-webkit-animation: spin 2s linear infinite;animation: spin 2s linear infinite;}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% { transform: rotate(360deg); }
+}
+
