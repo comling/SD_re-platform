@@ -36,11 +36,11 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
         lazyLoadingEnabled: true
-      jdbc-url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
+      jdbc-url: jdbc:mariadb://34.122.148.144:3306/re_platform?characterEncoding=UTF-8&useCursorFetch=true
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://${DB_HOST}:${DB_PORT:3306}/re_platform?characterEncoding=UTF-8&useCursorFetch=true
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+      url: jdbc:mariadb://34.122.148.144:3306/re_platform?characterEncoding=UTF-8&useCursorFetch=true
+      username: "sundakorea"
+      password: "#jhyun08027"
       connection-test-query: SELECT NOW() FROM dual
   jpa:
     generate-ddl: false

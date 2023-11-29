@@ -31,6 +31,8 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    implementation  group: 'org.apache.poi', name: 'poi', version: '5.1.0'        // HSSFWorkbook 사용가능
+    implementation  group: 'org.apache.poi', name: 'poi-ooxml', version: '5.1.0'  // XSSFWorkbook 사용가능
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -38,7 +40,7 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 
-}
+    }
 
 bootWar {
     archivesBaseName = 'RE-Platform2023'

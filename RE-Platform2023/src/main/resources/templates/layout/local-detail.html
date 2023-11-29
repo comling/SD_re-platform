@@ -28,8 +28,8 @@
                     <h3 class="tit-main">총 설비 개소</h3>
                     <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간 </span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
+<!--                        <span>조회기간 </span>-->
+<!--                        <span>{{yearData.min}} ~ {{yearData.max}}</span>-->
                         <p>
                             <img th:src="@{/img/img_solarPn.png}"/>
                             {{ pagination.total | number}}
@@ -41,8 +41,8 @@
                     <h3 class="tit-main">총 설비 용량</h3>
                     <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간</span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
+<!--                        <span>조회기간</span>-->
+<!--                        <span>{{yearData.min}} ~ {{yearData.max}}</span>-->
                         <p>
                             <img th:src="@{/img/img_house.png}"/>
                             {{ pagination.totalSumCapacity | number:2 }}
@@ -91,10 +91,6 @@
 
 
         <div class="main-bottom">
-            <div class="flex justify_between mg-btm10">
-                <button class="btn"><i class="far fa-compass"></i>&nbsp;&nbsp;지도보기</button>
-                <button class="btn" ng-click="excelDownload(searchDto)"><i class="fas fa-table"></i>&nbsp;&nbsp;내려받기</button>
-            </div>
             <div class="basicTable">
                 <table class="table businessTable">
                     <thead>
@@ -110,7 +106,7 @@
                     </tr>
                     </thead>
                     <tbody id="dataList">
-                        <tr ng-if="boardData.list.length === 0">
+                        <tr ng-if="boardData.data.list.length === 0">
                             <td colspan="8">검색 결과 없음</td>
                         </tr>
                         <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size">

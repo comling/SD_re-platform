@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script type="text/ng-template" id="pagination.component.html" th:fragment="pagination">
+    <div class="flex justify_between align_center">
+        <div class="flex align_center">
+            <span class="nowrap">페이지 당 표시건수</span>
+            <select class="input_style ml-10 w110"
+                    ng-model="$ctrl.limit"
+                    ng-options="v for v in $ctrl.limitOptions"
+                    ng-change="$ctrl.reload()">
+            </select>
+        </div>
+        <div class="pagination flex">
+            <a href="" title="처음으로 이동" ng-click="$ctrl.goPage(0)">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a href="" title="페이지 이동" ng-click="$ctrl.prevPage(1)">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            <a href="" ng-repeat="page in $ctrl.pages"
+               ng-class="$ctrl.page == page && 'active'"
+               ng-click="$ctrl.goPage(page)"
+               ng-bind="page + 1">
+            </a>
+            <a href="" title="페이지 이동" ng-click="$ctrl.nextPage(1)">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a href="" title="끝으로 이동" ng-click="$ctrl.endPage()">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        </div>
+        <h6 class="pageNum">
+            <span class="pagination_search_title1" style="font-size: 14px;">
+                총 : <b ng-bind="$ctrl.total | number"></b> 개소, <b ng-bind="$ctrl.totalSumCapacity | number:2"></b> kWp
+            </span>
+        </h6>
+    </div>
+</script>
+</html>

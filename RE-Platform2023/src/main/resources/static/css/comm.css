@@ -9,8 +9,6 @@ ol,ul,li{list-style:none;}
 a{cursor: pointer;}
 a:hover{opacity: 80%;}
 
-.w1200{max-width:1200px; margin:0 auto; box-sizing:border-box; padding:0 25px;}
-
 #header {position:relative; border-bottom:1px solid #EEEEEE;}
 #header .header_in {display:flex; padding-top:10px; padding-bottom:10px;}
 #header .header_in h1{display:inline-block; width: 270px; padding:10px; transition:padding 0.2s linear;}
@@ -18,7 +16,7 @@ a:hover{opacity: 80%;}
 #menu{position:relative; z-index:700; align-self: center;}
 #menu > .menu_in{display:flex; }
 #menu > .menu_in > li{flex:1; text-align:center; position:relative; width: 100px; align-self: center;}
-#menu > .menu_in > li > a{display:block; font-size:0.95rem; color:#222222; font-weight:600; padding:10px; word-break: keep-all;}
+#menu > .menu_in > li > a{display:block; font-size:0.95rem; color:#222222; font-weight:600; padding:10px; word-break: keep-all; text-decoration-line: none;}
 #menu > .menu_in > li > a:hover{cursor: pointer; color: #007aff;}
 #menu > .menu_in > li dl{position:absolute; z-index:705; top:60px;  box-sizing:border-box; height:0; overflow:hidden; width:100%; transition:all 0.2s linear;}
 
@@ -44,10 +42,30 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 
 .flex {display: flex;}
 .flex-end {align-items: flex-end;}
+.justify-content-end {justify-content: flex-end;}
+.justify_center {justify-content: center;}
+.justify_space_around {justify-content: space-around;}
+.justify_between {justify-content: space-between;}
+.align_center {-webkit-align-items: center;-moz-align-items: center;-ms-align-items: center;align-items: center;}
+.nowrap {white-space:nowrap}
+
+.pageNum {font-size:1rem; color:#222;}
+.pageNum b {color:#4671E9}
+.pagination {margin:20px 0;}
+.pagination a{width:36px; height:36px; text-align: center; line-height: 36px; color:#222;border-radius:100px; text-decoration-line: none;}
+.pagination a:hover:not(.active) {background:#d1d8e0;}
+.pagination a.active{border-radius:100px;color: #2778c4;font-weight: 800;}
+
+.pagination button{width:36px; height:36px; text-align: center; line-height: 36px; color:#222;border-radius:100px;border:0px solid #fff;}
+.pagination button:hover:not(.active) {background:#d1d8e0;}
+.pagination button.active{background: #DAE3FA; color:#222;border-radius:100px; }
+
 
 .main-content {margin-top: 15px; min-height: 630px;}
 .main-content .main-left {width: 350px; min-width: 350px; max-width: 350px;}
 .main-content .main-right {width: calc(100% - 350px);}
+.main-content .main-top {height: 310px; margin-top: 20px;}
+.main-content .main-bottom {height: calc(100% - 350px);}
 
 .main-content .main-card-sector {border: 1px solid #656565; border-radius: 10px; width: 280px; height: 120px; padding: 10px; margin-bottom: 15px;}
 .main-content .main-card-sector > .tit-main { color:#0f53a8; margin-bottom: 5px;}
@@ -68,6 +86,14 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .main-content .main-card-sector-notice > .notice-footer {text-align: center;}
 
 .height-60 {height: 60px;}
+.mg-top10 {margin-top: 10px;}
+.mg-btm10 {margin-bottom: 10px;}
+.mg-left10 {margin-left: 10px;}
+.mg-left30 {margin-left: 30px;}
+.text-right {text-align: right;}
+.w-300 {width: 300px !important;}
+.w1200{max-width:1200px; margin:0 auto; box-sizing:border-box; padding:0 25px; min-width: 1000px;}
+
 
 /*** S::Table***/
 .table {width:100%; border-collapse: collapse;}
@@ -93,3 +119,13 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
     100% { transform: rotate(360deg); }
 }
 
+
+.search-filter-sel {width: 125px;}
+.search-filter-box > div > select {-webkit-appearance:none; -moz-appearance:none; appearance:none; background:url('../img/img_sel_arrow.png') no-repeat right 5px center; background-size: 20px;}
+.search-filter-box > div > select::-ms-expand{display:none;}
+
+.btn {width: 90px; border: none; cursor: pointer;align-self: center;text-align: center;height: 25px;border-radius: 5px;box-shadow: 2px 2px #c2c2c2;}
+
+.btn:hover {opacity: 80%;}
+.btn-blue{color: white; background-color: #1d55a3;border: none; width: 50px; cursor: pointer;}
+.btn-blue:hover{opacity: 80%;}

@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--    <section class="main-content w1200" th:fragment="contentFragment">-->
     <th:block layout:fragment="content">
-
+        <input type="hidden" name="pageName" th:value="${pageName}">
         <style>
             .businessTable th:nth-child(1), td:nth-child(1){width: 70px;}
             .businessTable th:nth-child(2), td:nth-child(2){width: 110px;}

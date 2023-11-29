@@ -31,12 +31,12 @@
         <result property="entY"                   column="entY" />
     </resultMap>
 
-    <!-- WHERE 조건 -->
-    <sql id="conditions">
+    <!-- WHERE 조건 Main, TODO 차후 구현 예정 -->
+    <sql id="conditions-main">
         <where>
             <if test="keyword != null and keyword.equals('') == false">
             <choose>
-                <when test="searchType == null or searchType.equals('')">
+                <when test="searchFilter == null or searchFilter.searchType.equals('')">
                  (
                     Sigungu LIKE CONCAT('%', #{keyword}, '%')
                    OR BYEAR LIKE CONCAT('%', #{keyword}, '%')
@@ -46,19 +46,19 @@
                 </when>
                 <otherwise>
                     <choose>
-                        <when test="searchType.equals('sigungu')">
+                        <when test="searchFilter.searchType.equals('sigungu')">
                         Sigungu LIKE CONCAT('%', #{keyword}, '%')
                         </when>
 
-                        <when test="searchType.equals('BYEAR')">
+                        <when test="searchFilter.searchType.equals('BYEAR')">
                         BYEAR LIKE CONCAT('%', #{keyword}, '%')
                         </when>
 
-                        <when test="searchType.equals('BNAME')">
+                        <when test="searchFilter.searchType.equals('BNAME')">
                         BNAME LIKE CONCAT('%', #{keyword}, '%')
                         </when>
 
-                        <when test="searchType.equals('applicantName')">
+                        <when test="searchFilter.searchType.equals('applicantName')">
                         ApplicantName LIKE CONCAT('%', #{keyword}, '%')
                         </when>
                     </choose>
@@ -68,13 +68,54 @@
         </where>
     </sql>
 
+    <!-- WHERE 조건 Sub -->
+    <sql id="conditions-sub">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="keyword != null and keyword.equals('') == false">
+                (
+                Sigungu LIKE CONCAT('%', #{keyword}, '%')
+                OR BYEAR LIKE CONCAT('%', #{keyword}, '%')
+                OR BNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR ApplicantName LIKE CONCAT('%', #{keyword}, '%')
+                OR Energy LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchFilter != null">
+                <if test="searchFilter.BNAME.equals('') == false">
+                    AND BNAME = #{searchFilter.BNAME}
+                </if>
+                <if test="searchFilter.BYEAR != 0">
+                    AND BYEAR = #{searchFilter.BYEAR}
+                </if>
+                <if test="searchFilter.energy.equals('') == false">
+                    AND Energy = #{searchFilter.energy}
+                </if>
+                <if test="searchFilter.facilityType.equals('') == false">
+                    AND FacilityType = #{searchFilter.facilityType}
+                </if>
+                <if test="searchFilter.sigungu.equals('') == false">
+                    AND Sigungu = #{searchFilter.sigungu}
+                </if>
+            </if>
+        </trim>
+    </sql>
+
     <!-- 게시글 수 조회 -->
     <select id="count" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="int">
         SELECT
             COUNT(*)
         FROM
             Business_data
-        <include refid="conditions" />
+        <include refid="conditions-sub" />
+    </select>
+
+    <!-- 전체 용량 조회 -->
+    <select id="countAndSumCapacity" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="hashMap">
+        SELECT
+            COUNT(UserID) as count, SUM(Capacity) as sum
+        FROM
+            Business_data
+        <include refid="conditions-sub" />
     </select>
 
     <!-- 게시글 리스트 조회 -->
@@ -83,7 +124,7 @@
             *
         FROM
             Business_data
-        <include refid="conditions" />
+        <include refid="conditions-main" />
         ORDER BY
             UserID DESC, BYEAR DESC
         LIMIT #{pagination.limitStart}, #{size}
@@ -103,4 +144,33 @@
             Business_data
     </select>
 
+
+    <!-- 필터 목록 조회용 차후 교체 필요 -->
+    <select id="getSearchFilterBNAME" resultType="string">
+        SELECT DISTINCT BNAME FROM Business_data;
+    </select>
+    <select id="getSearchFilterBYEAR" resultType="integer">
+        SELECT DISTINCT BYEAR FROM Business_data;
+    </select>
+    <select id="getSearchFilterFacilityType" resultType="string">
+        SELECT DISTINCT FacilityType FROM Business_data;
+    </select>
+    <select id="getSearchFilterEnergy" resultType="string">
+        SELECT DISTINCT energy FROM Business_data;
+    </select>
+    <select id="getSearchFilterSigungu" resultType="string">
+        SELECT DISTINCT Sigungu FROM Business_data;
+    </select>
+
+    <!-- local 검색 -->
+    <select id="getSearchBusinessDataList" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
+        SELECT
+            *
+        FROM
+            Business_data
+        <include refid="conditions-sub" />
+        ORDER BY
+            UserID DESC, BYEAR DESC
+        LIMIT #{pagination.limitStart}, #{size}
+    </select>
 </mapper>

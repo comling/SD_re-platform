@@ -3,6 +3,8 @@ package kr.techdna.replatform2023.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 public class SearchDto {
@@ -11,7 +13,7 @@ public class SearchDto {
     private int size;           // 한 페이지에 보여질 목록 개수
     private int pageSize;       // 하단에 보여질 페이지 개수
     private String keyword;     // 검색어
-    private String searchType;  // 검색 타입
+    private Map<String, Object> searchFilter;  // 검색 타입 Object
     private PaginationDto pagination;  // 페이지네이션 정보
 
     public SearchDto(){

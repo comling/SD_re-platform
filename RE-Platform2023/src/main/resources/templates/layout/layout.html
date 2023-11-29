@@ -15,6 +15,8 @@
 
     <script type="text/javascript" th:src="@{/lib/angularjs/angular-1.7.7.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/ng-common.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pagination.component.js}"></script>
+
     <script type="text/javascript" th:src="@{/js/mainController.js}"></script>
 
 
@@ -48,7 +50,7 @@
 
 
         <!--S::header-->
-        <th:block th:replace="/layout/header::headerFragment"></th:block>
+        <th:block th:replace="./layout/header::headerFragment"></th:block>
         <!--E::header-->
 
         <!--S::body-->
@@ -56,7 +58,7 @@
         <!--E::body-->
 
         <!--S::footer-->
-        <th:block th:replace="/layout/footer::footerFragment"></th:block>
+        <th:block th:replace="./layout/footer::footerFragment"></th:block>
         <!--E::footer-->
 
 

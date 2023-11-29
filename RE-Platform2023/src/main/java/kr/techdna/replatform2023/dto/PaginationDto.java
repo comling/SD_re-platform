@@ -14,9 +14,19 @@ public class PaginationDto {
     private boolean existPrevPage;  // 이전 페이지 존재 여부
     private boolean existNextPage;  // 다음 페이지 존재 여부
 
+    private double totalSumCapacity; // 전체 발전 용량(Capacity) 합계
+
     public PaginationDto(int totalRecordCount, SearchDto searchDto) {
         if (totalRecordCount > 0) {
             this.totalRecordCount = totalRecordCount;
+            this.calculation(searchDto);
+        }
+    }
+
+    public PaginationDto(int totalRecordCount, double totalSumCapacity, SearchDto searchDto) {
+        if (totalRecordCount > 0) {
+            this.totalRecordCount = totalRecordCount;
+            this.totalSumCapacity = totalSumCapacity;
             this.calculation(searchDto);
         }
     }
