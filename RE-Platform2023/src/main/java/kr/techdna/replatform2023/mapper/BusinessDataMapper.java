@@ -16,6 +16,7 @@ public interface BusinessDataMapper {
 
     List<ResBusinessData> getBusinessDataList(final SearchDto params);
     List<ResBusinessData> getSearchBusinessDataList(final SearchDto params);
+    List<ResBusinessData> getSearchBusinessDataListForExcelDownload(final SearchDto params);
 
     long getSumCapacity();
 

@@ -25,7 +25,7 @@
                     <span>{{yearData.min}} ~ {{yearData.max}}</span>
                     <p>
                         <img th:src="@{/img/img_solarPn.png}"/>
-                        {{sumCount | number}}
+                        {{ pagination.total | number}}
                     </p>
                     <span> 개소</span>
                 </div>
@@ -38,7 +38,7 @@
                     <span>{{yearData.min}} ~ {{yearData.max}}</span>
                     <p>
                         <img th:src="@{/img/img_house.png}"/>
-                        {{sumCapacity | number }}
+                        {{ pagination.totalSumCapacity | number:2 }}
                     </p>
                     <span> kWp</span>
                 </div>

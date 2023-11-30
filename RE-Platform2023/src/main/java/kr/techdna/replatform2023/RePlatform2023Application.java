@@ -14,9 +14,9 @@ public class RePlatform2023Application extends SpringBootServletInitializer {
         SpringApplication.run(RePlatform2023Application.class, args);
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
-        return super.configure(builder);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+//        return super.configure(builder);
+//    }
 
 }

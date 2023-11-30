@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellReference;
@@ -34,18 +35,18 @@ import java.util.stream.Collectors;
 @Service
 public class BusinessDataService {
 
-    private final BusinessDataRepository businessDataRepository;
+//    private final BusinessDataRepository businessDataRepository;
     private final BusinessDataMapper businessDataMapper;
-
-    public List<ResBusinessData> findAll(){
-        Sort sort = Sort.by(Sort.Direction.DESC, "userID");
-        List<BusinessData> list = businessDataRepository.findAll(sort);
-        return list.stream().map(ResBusinessData::new).collect(Collectors.toList());
-    }
-
-    public Page<ResBusinessData> findByParams(Pageable pageable){
-        return businessDataRepository.findAll(pageable).map(ResBusinessData::new);
-    }
+//
+//    public List<ResBusinessData> findAll(){
+//        Sort sort = Sort.by(Sort.Direction.DESC, "userID");
+//        List<BusinessData> list = businessDataRepository.findAll(sort);
+//        return list.stream().map(ResBusinessData::new).collect(Collectors.toList());
+//    }
+//
+//    public Page<ResBusinessData> findByParams(Pageable pageable){
+//        return businessDataRepository.findAll(pageable).map(ResBusinessData::new);
+//    }
 
     public Map<String, Object> getBusinessDataList(SearchDto params){
         // 게시글 수 조회
@@ -121,9 +122,23 @@ public class BusinessDataService {
         return response;
     }
 
+    public List<ResBusinessData> geSearchBusinessDataListFortExcelDownload(SearchDto params){
+
+        // 게시글 수 & 총 발전 용량 조회
+        int count = businessDataMapper.count(params);
+        // 등록된 게시글이 없는 경우, 로직 종료
+        if (count < 1) {
+            return null;
+        }
+
+        // 게시글 리스트 조회
+        List<ResBusinessData> list = businessDataMapper.getSearchBusinessDataListForExcelDownload(params);
+
+        return list;
+    }
 
     /* Excel download */
-    public void excelDataDownload(Map<String, Object> param, HttpServletResponse response) throws IOException {
+    public void excelDataDownload(List<ResBusinessData> list, HttpServletResponse response) throws IOException {
 
         ClassPathResource classPathResource = new ClassPathResource("static/templates/excel-template.xlsx");
 
@@ -133,33 +148,35 @@ public class BusinessDataService {
             XSSFWorkbook wb = new XSSFWorkbook(opcPackage);
             Sheet sheet = wb.getSheet(wb.getSheetName(0));
 
-            int totCnt = ((List<ResBusinessData>) param.get("list")).size();
+            int totCnt = list.size();
             int i = 1;
-            for (ResBusinessData item : (List<ResBusinessData>) param.get("list")) {
-                setValue(sheet, "A" + i, item.getUserID().toString());
-                setValue(sheet, "B" + i, String.valueOf(item.getBYEAR()));
-                setValue(sheet, "C" + i, item.getBNAME());
-                setValue(sheet, "D" + i, item.getOrganization());
-                setValue(sheet, "E" + i, item.getDepartment());
-                setValue(sheet, "F" + i, item.getApplicantName());
-                setValue(sheet, "G" + i, item.getApplicantPhone());
-                setValue(sheet, "H" + i, String.valueOf(item.getCapacity()));
-                setValue(sheet, "I" + i, item.getApplicantAddress());
-                setValue(sheet, "J" + i, item.getAddress());
-                setValue(sheet, "K" + i, item.getRoadAddress());
-                setValue(sheet, "L" + i, item.getBCode());
-                setValue(sheet, "M" + i, item.getHCode());
-                setValue(sheet, "N" + i, item.getSigungu());
-                setValue(sheet, "O" + i, item.getEupMyeon());
-                setValue(sheet, "P" + i, item.getDong());
-                setValue(sheet, "Q" + i, item.getEnergy());
-                setValue(sheet, "R" + i, item.getInstallType());
-                setValue(sheet, "S" + i, item.getConstructionCompany());
-                setValue(sheet, "T" + i, item.getFacilityType());
-                setValue(sheet, "U" + i, item.getMonitoring());
-                setValue(sheet, "V" + i, item.getConstructionNumber());
-                setValue(sheet, "W" + i, String.valueOf(item.getEntX()));
-                setValue(sheet, "X" + i, String.valueOf(item.getEntY()));
+            for (ResBusinessData item : list) {
+                Row row = sheet.createRow(i);
+                int col = 0;
+                addCell(row, col++, item.getUserID().toString());
+                addCell(row, col++, String.valueOf(item.getBYEAR()));
+                addCell(row, col++, item.getBNAME());
+                addCell(row, col++, item.getOrganization());
+                addCell(row, col++, item.getDepartment());
+                addCell(row, col++, item.getApplicantName());
+                addCell(row, col++, item.getApplicantPhone());
+                addCell(row, col++, String.valueOf(item.getCapacity()));
+                addCell(row, col++, item.getApplicantAddress());
+                addCell(row, col++, item.getAddress());
+                addCell(row, col++, item.getRoadAddress());
+                addCell(row, col++, item.getBCode());
+                addCell(row, col++, item.getHCode());
+                addCell(row, col++, item.getSigungu());
+                addCell(row, col++, item.getEupMyeon());
+                addCell(row, col++, item.getDong());
+                addCell(row, col++, item.getEnergy());
+                addCell(row, col++, item.getInstallType());
+                addCell(row, col++, item.getConstructionCompany());
+                addCell(row, col++, item.getFacilityType());
+                addCell(row, col++, item.getMonitoring());
+                addCell(row, col++, item.getConstructionNumber());
+                addCell(row, col++, String.valueOf(item.getEntX()));
+                addCell(row, col++, String.valueOf(item.getEntY()));
                 i++;
             }
 
@@ -175,13 +192,17 @@ public class BusinessDataService {
         }
     }
 
-    private void setValue(Sheet sheet, String position, String value) {
-        CellReference ref = new CellReference(position);
-        Row r = sheet.getRow(ref.getRow());
-        if (r != null) {
-            Cell c = r.getCell(ref.getCol());
-            c.setCellValue(value);
+    private void addCell(Row row, int cellIndex, Object value) {
+        Cell cell = row.createCell(cellIndex, CellType.STRING);
+
+        if(value == null) {
+            cell.setCellValue("");
+            return;
         }
+        String str = value.toString();
+        if(str.length() > 32767)
+            str = str.substring(0, 32767);
+        cell.setCellValue(str);
     }
 
 

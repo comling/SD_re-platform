@@ -162,7 +162,7 @@
         SELECT DISTINCT Sigungu FROM Business_data;
     </select>
 
-    <!-- local 검색 -->
+    <!-- 검색 및 페이지네이션 용 -->
     <select id="getSearchBusinessDataList" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
         SELECT
             *
@@ -173,4 +173,16 @@
             UserID DESC, BYEAR DESC
         LIMIT #{pagination.limitStart}, #{size}
     </select>
+
+    <!-- 엑셀 다운로드 용 전체 조회 / 전체 조회하여 데이터 return 하므로 page 없음 -->
+    <select id="getSearchBusinessDataListForExcelDownload" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
+        SELECT
+            *
+        FROM
+            Business_data
+        <include refid="conditions-sub" />
+        ORDER BY
+            UserID ASC, BYEAR ASC
+    </select>
+
 </mapper>

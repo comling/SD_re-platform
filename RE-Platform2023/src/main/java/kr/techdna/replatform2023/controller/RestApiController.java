@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class RestApiController {
     }
 
     /**
+     * 전체 조회용 매서드
      * @param params
      * SearchDto {
      *     pageNum : 현재 페이지
@@ -107,10 +109,26 @@ public class RestApiController {
 
 
     /* Excel download */
-    @GetMapping("/excelDownload")
-    public void excelDownload(final SearchDto params, HttpServletResponse response) throws InvalidFormatException, IOException {
-            Map<String, Object> data = businessDataService.getBusinessDataList(params);
-            businessDataService.excelDataDownload(data, response);
+    @PostMapping("/excelDownload")
+    public void excelDownload(@RequestParam Map<String, Object> body, HttpServletResponse response){
+            try{
+                SearchDto params = new SearchDto();
+                Map<String, Object> tmpMap = new HashMap<>();
+                if(body.get("keyword") != null) params.setKeyword(body.get("keyword").toString());
+
+                //searchFilter 설정
+                if(body.get("BNAME") != null) tmpMap.put("BNAME", body.get("BNAME"));
+                if(body.get("facilityType") != null) tmpMap.put("facilityType", body.get("facilityType"));
+                if(body.get("energy") != null) tmpMap.put("energy", body.get("energy"));
+                if(body.get("BYEAR") != null) tmpMap.put("BYEAR", body.get("BYEAR"));
+                if(body.get("sigungu") != null) tmpMap.put("sigungu", body.get("sigungu"));
+                params.setSearchFilter(tmpMap);
+
+                List<ResBusinessData> data = businessDataService.geSearchBusinessDataListFortExcelDownload(params);
+                businessDataService.excelDataDownload(data, response);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
     }
 
 

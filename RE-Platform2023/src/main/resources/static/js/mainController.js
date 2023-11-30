@@ -90,9 +90,13 @@ function MainController(
         });
 
         if($scope.global.pageName =='home'){
-            getMinMaxYear(), getSumCapacity(), getBusinessDataList(), getSumCount();
+            getMinMaxYear();
+            getSumCapacity();
+            $scope.getSearchBusinessDataList($scope.searchDto);
         } else if($scope.global.pageName =='local'){
-            getMinMaxYear(), getSearchFilter(), $scope.getSearchBusinessDataList($scope.searchDto);
+            getMinMaxYear();
+            getSearchFilter();
+            $scope.getSearchBusinessDataList($scope.searchDto);
         }
     });
 
@@ -280,74 +284,85 @@ function MainController(
             $scope.getSearchBusinessDataList($scope.searchDto);
     }
 
+    /* Excel Download */
     $scope.excelDownload = function(searchDto){
         $("#loading").show();
-        console.log("searchDto : ", searchDto)
+
+        /* 조회 데이터 없을 경우 return */
+        if($scope.boardData.list.length === 0 ) {
+            Swal.fire({
+                icon: 'warning',
+                title: '조회 데이터가 0건 입니다.',
+                text: '엑셀 다운로드는 조회 데이터가 1건 이상일경우에만 가능합니다.'
+            })
+            return;
+        }
+
+        /* 전체 데이터를 내려줄 것이므로 pagenum, size 등 제거 */
         let body = {
-            pageNum: searchDto.pageNum,
-            size: searchDto.size,
-            pageSize: searchDto.pageSize,
             keyword: searchDto.keyword,
-            searchFilter: {
-                BNAME: searchDto.searchFilter.BNAME,
-                facilityType: searchDto.searchFilter.facilityType,
-                energy: searchDto.searchFilter.energy,
-                BYEAR: searchDto.searchFilter.BYEAR,
-                sigungu: searchDto.searchFilter.sigungu
-            }
+            BNAME: searchDto.searchFilter.BNAME,
+            facilityType: searchDto.searchFilter.facilityType,
+            energy: searchDto.searchFilter.energy,
+            BYEAR: searchDto.searchFilter.BYEAR,
+            sigungu: searchDto.searchFilter.sigungu
         };
         /* 최초 검색시 초기화 */
-        if(searchDto.searchFilter.BNAME === "사업명") body.searchFilter.BNAME = "";
-        if(searchDto.searchFilter.facilityType === "시설구분") body.searchFilter.facilityType = "";
-        if(searchDto.searchFilter.energy === "에너지원") body.searchFilter.energy = "";
-        if(searchDto.searchFilter.BYEAR === "사업연도") body.searchFilter.BYEAR = "";
-        if(searchDto.searchFilter.sigungu === "시/군/구") body.searchFilter.sigungu = "";
-        console.log("body : ", body)
+        if(searchDto.searchFilter.BNAME === "사업명") body.BNAME = "";
+        if(searchDto.searchFilter.facilityType === "시설구분") body.facilityType = "";
+        if(searchDto.searchFilter.energy === "에너지원") body.energy = "";
+        if(searchDto.searchFilter.BYEAR === "사업연도") body.BYEAR = "";
+        if(searchDto.searchFilter.sigungu === "시/군/구") body.sigungu = "";
 
         const url = '/api/excelDownload';
-        $http({
-            method: "GET",
-            url: url,
-            data: JSON.stringify(body),
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            cache: false,
-            xhr: function () {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 2) {
-                        if (xhr.status == 200) {
-                            xhr.responseType = "blob";
-                        } else {
-                            xhr.responseType = "text";
-                        }
-                    }
-                };
-                return xhr;
-            },
-        }).then( function (result) {
-            console.log("excelDownload : " , result);
 
-            var blob = new Blob([result.data], { type: "application/octetstream" });
+        let excelDownloadForm = document.createElement('form');
+        excelDownloadForm.setAttribute("method", "POST");
+        excelDownloadForm.setAttribute("action", url);
 
-            //Check the Browser type and download the File.
-            var isIE = false || !!document.documentMode;
-            if (isIE) {
-                window.navigator.msSaveBlob(blob, fileName);
-            } else {
-                var url = window.URL || window.webkitURL;
-                link = url.createObjectURL(blob);
-                var a = $("<a />");
-                a.attr("download", fileName);
-                a.attr("href", link);
-                $("body").append(a);
-                a[0].click();
-                $("body").remove(a);
-            }
+        let input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'keyword');
+        input.setAttribute('value', body.keyword);
+        excelDownloadForm.appendChild(input);
 
-        })
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'BNAME');
+        input.setAttribute('value', body.BNAME);
+        excelDownloadForm.appendChild(input);
+
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'facilityType');
+        input.setAttribute('value', body.facilityType);
+        excelDownloadForm.appendChild(input);
+
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'energy');
+        input.setAttribute('value', body.energy);
+        excelDownloadForm.appendChild(input);
+
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'BYEAR');
+        input.setAttribute('value', body.BYEAR);
+        excelDownloadForm.appendChild(input);
+
+        input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'sigungu');
+        input.setAttribute('value', body.sigungu);
+        excelDownloadForm.appendChild(input);
+
+        console.log(excelDownloadForm);
+
+        document.body.appendChild(excelDownloadForm);
+        excelDownloadForm.submit();
+
+        $("#loading").hide();
+
     }
 
 

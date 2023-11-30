@@ -26,4 +26,15 @@ public class SearchDto {
         return (pageNum - 1) * size;
     }
 
+    @Override
+    public String toString() {
+        return "SearchDto{" +
+                "pageNum=" + pageNum +
+                ", size=" + size +
+                ", pageSize=" + pageSize +
+                ", keyword='" + keyword + '\'' +
+                ", searchFilter=" + searchFilter +
+                ", pagination=" + pagination +
+                '}';
+    }
 }
