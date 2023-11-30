@@ -12,7 +12,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.study" level="DEBUG" appender-ref="console" />
+    <logger name="kr.techdna" level="DEBUG" appender-ref="console" />
     <logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog" />
     <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
 

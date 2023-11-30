@@ -151,6 +151,14 @@
             Business_data
     </select>
 
+    <!-- main page 집계용 쿼리 -->
+    <select id="selectMainAggr" resultType="kr.techdna.replatform2023.dto.TotDTO">
+        SELECT
+            Sigungu, COUNT(UserID) as cnt, SUM(Capacity) as sum
+        FROM
+            Business_data
+        GROUP BY Sigungu
+    </select>
 
     <!-- 필터 목록 조회용 차후 교체 필요 -->
     <select id="getSearchFilterBNAME" resultType="string">

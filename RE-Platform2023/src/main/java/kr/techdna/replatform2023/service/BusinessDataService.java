@@ -1,5 +1,6 @@
 package kr.techdna.replatform2023.service;
 
+import groovy.util.logging.Log4j;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.techdna.replatform2023.domain.BusinessData;
 import kr.techdna.replatform2023.dto.PaginationDto;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Log4j
 public class BusinessDataService {
 
 //    private final BusinessDataRepository businessDataRepository;
@@ -75,6 +77,31 @@ public class BusinessDataService {
     public Map<String, Object> getMinMaxYear(){
         Map<String, Object> response = new HashMap<>();
         response.put("list", businessDataMapper.getMinMaxYear());
+        return response;
+    }
+
+    /* 메인 페이지 집계용 */
+    public Map<String, Object> selectMainAggr(){
+        Map<String, Object> response = new HashMap<>();
+
+        // 게시글 수 & 총 발전 용량 조회
+        SearchDto params = new SearchDto();
+        Map<String, Object> cntAndSumCapacity = businessDataMapper.countAndSumCapacity(params);
+        int count = Long.valueOf(cntAndSumCapacity.get("count").toString()).intValue();
+
+        // 등록된 게시글이 없는 경우, 로직 종료
+        if (count < 1) {
+            response.put("params", params);
+            response.put("list", new ArrayList<>());
+            return response;
+        }
+        double sumCapacity = (double) cntAndSumCapacity.get("sum");
+
+        response.put("list", businessDataMapper.selectMainAggr());
+        response.put("sumCapacity", sumCapacity);
+        response.put("count", count);
+
+
         return response;
     }
 
