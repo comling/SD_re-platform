@@ -12,6 +12,10 @@
             .businessTable th:nth-child(6), td:nth-child(6){width: 140px;}
             .businessTable th:nth-child(7), td:nth-child(7){width: 140px;}
             .businessTable th:nth-child(8), td:nth-child(8){width: 300px;}
+
+            .rowBtn {cursor: pointer;}
+            .rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
+            .rowBtn:hover > td{color: #007aff !important;}
         </style>
 
     <div class="main-content w1200">
@@ -87,8 +91,6 @@
             </div>
         </div>
 
-
-
         <div class="main-bottom">
             <div class="flex justify_between mg-btm10">
                 <button class="btn"><i class="far fa-compass"></i>&nbsp;&nbsp;지도보기</button>
@@ -112,7 +114,7 @@
                         <tr ng-if="boardData.list.length === 0">
                             <td colspan="8">검색 결과 없음</td>
                         </tr>
-                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" ng-click="openModal('businessData-modal', item);">
+                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" class="rowBtn" ng-click="openModal('businessData-modal', item);">
                             <td>{{item.userID}}</td>
                             <td>{{item.bname}}</td>
                             <td>{{item.facilityType}}</td>
@@ -142,54 +144,51 @@
         <div class="modal-wrap js-modal" id="businessData-modal">
             <div class="modal-inner size-normal">
                 <div class="modal-head">
-                    <h2></h2>
+                    <h2>{{detailModalData.userID}}  |  {{detailModalData.applicantName}}</h2>
                     <button class="btn-close js-modal-close" ng-click="closeNaraModal('businessData-modal')">CLOSE</button>
                 </div>
                 <div class="modal-body">
-                    <h2></h2>
-                    <br>
-
                     <h4>상세정보</h4>
                     <div class="basicTable">
-                        <table class="table">
+                        <table class="table modal-table">
                             <tbody class="non_tr_style">
                             <tr>
                                 <th>사업연도</th>
-                                <td title=""></td>
+                                <td title="">{{detailModalData.byear}}</td>
                                 <th>사업명</th>
-                                <td title=""></td>
+                                <td title="">{{detailModalData.bname}}</td>
                                 <th>주관기관</th>
-                                <td></td>
+                                <td>{{detailModalData.organization}}</td>
                             </tr>
                             <tr>
                                 <th>신청자명</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantName}}</td>
                                 <th>신청자 연락처</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantPhone}}</td>
                                 <th>주관부서</th>
-                                <td></td>
+                                <td>{{detailModalData.department}}</td>
                             </tr>
                             <tr>
                                 <th>설치용량</th>
-                                <td></td>
+                                <td>{{detailModalData.capacity}}</td>
                                 <th>설치형태</th>
-                                <td></td>
+                                <td>{{detailModalData.installType}}</td>
                                 <th>설치장소</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantAddress}}</td>
                             </tr>
                             <tr>
                                 <th>에너지원</th>
-                                <td></td>
+                                <td>{{detailModalData.energy}}</td>
                                 <th>시공업체</th>
-                                <td></td>
+                                <td>{{detailModalData.constructionCompany}}</td>
                                 <th>모니터링 설치유무</th>
-                                <td></td>
+                                <td>{{detailModalData.monitoring}}</td>
                             </tr>
                             <tr>
                                 <th>시설형태</th>
-                                <td></td>
+                                <td>{{detailModalData.facilityType}}</td>
                                 <th>시공업체 연락처</th>
-                                <td></td>
+                                <td>{{detailModalData.constructionCompany}}</td>
                                 <th>비고</th>
                                 <td></td>
                             </tr>
@@ -197,9 +196,21 @@
                         </table>
                     </div>
 
+                    <br>
                     <h4>AS 이력</h4>
-                    <div class="flex">
-
+                    <div class="basicTable">
+                        <table class="table modal-table-btm">
+                            <tr>
+                                <th>발생일</th>
+                                <th>내용</th>
+                                <th>처리현황</th>
+                            </tr>
+                            <tr ng-repeat="item in detailModalData.asData">
+                                <td>{{item.asDate}}</td>
+                                <td>{{item.asDescription}}</td>
+                                <td>{{item.asStatus}}</td>
+                            </tr>
+                        </table>
                     </div>
 
                 </div>

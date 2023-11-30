@@ -1,5 +1,7 @@
 package kr.techdna.replatform2023.test;
 
+import kr.techdna.replatform2023.mapper.AsDataMapper;
+import kr.techdna.replatform2023.service.AsDataService;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,12 @@ public class SqlTest {
 
     @Autowired
     private SqlSessionFactory sessionFactory;
+
+    @Autowired
+    private AsDataService asDataService;
+
+    @Autowired
+    private AsDataMapper asDataMapper;
 
     @Test
     void contextLoads() {
@@ -39,4 +47,11 @@ public class SqlTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void getAsDataListTest(){
+        asDataMapper.selectForUserID(985);
+    }
+
+
 }

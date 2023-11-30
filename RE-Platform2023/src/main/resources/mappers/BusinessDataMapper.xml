@@ -30,6 +30,13 @@
         <result property="entX"                   column="entX" />
         <result property="entY"                   column="entY" />
     </resultMap>
+    <resultMap id="AsDataResultMap" type="kr.techdna.replatform2023.dto.ResAsData">
+        <result property="no"                      column="No" />
+        <result property="userID"                  column="UserID" />
+        <result property="asDate"                  column="AS_date" />
+        <result property="asDescription"           column="AS_description" />
+        <result property="asStatus"                column="AS_status" />
+    </resultMap>
 
     <!-- WHERE 조건 Main, TODO 차후 구현 예정 -->
     <sql id="conditions-main">
@@ -183,6 +190,26 @@
         <include refid="conditions-sub" />
         ORDER BY
             UserID ASC, BYEAR ASC
+    </select>
+
+    <!-- BusinessData.UserID 에 따른 AS_data 수 조회(필요 없음...) -->
+    <select id="countForAsData" parameterType="java.lang.Integer" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            AS_data
+        WHERE
+            UserID = #{userID}
+    </select>
+    <select id="selectForUserID" parameterType="java.lang.Integer" resultMap="AsDataResultMap">
+        SELECT
+            *
+        FROM
+            AS_data
+        WHERE
+            UserID = #{userID}
+        ORDER BY
+            UserID DESC, No DESC
     </select>
 
 </mapper>

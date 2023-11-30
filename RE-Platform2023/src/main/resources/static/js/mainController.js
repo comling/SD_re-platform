@@ -365,17 +365,47 @@ function MainController(
 
     }
 
-
+    $scope.detailModalData;
     $scope.mdzIndex = 10;
     /* 상세 페이지 오픈 */
     $scope.openModal = function (mdId, data) {
         console.log(data);
-
+        $scope.detailModalData = data;
         $scope.mdzIndex++;
         if (mdId === null || mdId === '') return true;
+
+        if(mdId === 'businessData-modal'){
+            getAsDataList(data.userID);
+        }
+
+
         $('#' + mdId).addClass('js-is-active').css({'z-index': $scope.mdzIndex});
     }
+
+    function getAsDataList(userID){
+        $("#loading").show();
+        $scope.detailModalData.asData = {};
+
+        let url = '/api/getAsDataList?userID=' + userID*1;
+        $http({
+            method: "GET",
+            url: url,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        }).then( function (result) {
+            $("#loading").hide();
+            $scope.detailModalData.asData = result.data;
+        }).catch(e=>{
+            console.log(e);
+            $("#loading").hide();
+            return null;
+        })
+    }
+
     $scope.closeNaraModal = function (mdId) {
+        $scope.detailModalData = {};
         $('#' + mdId).removeClass('js-is-active').css({'z-index': ''});
         if ($('.js-modal.js-is-active').length === 0) {
             $scope.mdzIndex = 10;

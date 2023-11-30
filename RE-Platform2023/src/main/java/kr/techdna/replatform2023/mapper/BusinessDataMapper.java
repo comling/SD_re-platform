@@ -1,5 +1,6 @@
 package kr.techdna.replatform2023.mapper;
 
+import kr.techdna.replatform2023.dto.ResAsData;
 import kr.techdna.replatform2023.dto.ResBusinessData;
 import kr.techdna.replatform2023.dto.SearchDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,6 +18,8 @@ public interface BusinessDataMapper {
     List<ResBusinessData> getBusinessDataList(final SearchDto params);
     List<ResBusinessData> getSearchBusinessDataList(final SearchDto params);
     List<ResBusinessData> getSearchBusinessDataListForExcelDownload(final SearchDto params);
+    List<ResAsData> selectForUserID(final Integer userID);
+    int countForAsData(final Integer userID);
 
     long getSumCapacity();
 

@@ -144,9 +144,9 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .modal-body h4 {font-weight: bold; color:#222; padding-left:15px; margin-bottom:10px; font-size:1.125rem;}
 .modal-body h4::before {content:''; position: absolute; width:8px; height:8px; background: #4A506B; margin-left:-15px; margin-top:7px; border-radius: 10px;}
 .modal-wrap .btn-close {position: absolute; top: 10px; right: 10px;}
-.modal-wrap .btn-close{position:absolute; right:-15px; top:-15px; cursor:pointer; width:40px; height:40px; background:url('/resources/img/renew/closeBtn.png') no-repeat center/12px auto,#4A506B; border-radius:50%; font-size:0; transition:all 0.2s linear; border:0;}
+.modal-wrap .btn-close{position:absolute; right:-15px; top:-15px; cursor:pointer; width:40px; height:40px; background:url('../img/closeBtn.png') no-repeat center/12px auto,#4A506B; border-radius:50%; font-size:0; transition:all 0.2s linear; border:0;}
 .modal-wrap .btn-close:hover{background-color:#4671E9; transform:rotate(180deg); transition:all 0.2s linear;}
-.size-normal {width: 80vw; height: auto; max-width:1200px; }
+.size-normal {width: 80vw; height: auto; max-width:1200px; min-width: 760px;}
 .size-normal .modal-body {height: auto;}
 .size-vertical {width: 66vw; height: auto;}
 .size-vertical .modal-body {height: auto;}
@@ -155,3 +155,11 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .js-modal {display: none;}
 .js-modal.js-is-active {display: block;}
 /* E : Modal */
+
+.modal-table th {width: 110px; padding-left: 0px !important;}
+.modal-table tr {text-align: center !important;}
+.modal-table td:nth-child(2) {width: 150px !important;}
+.modal-table td:nth-child(4) {width: 200px !important;}
+.modal-table td:nth-child(6) {width: 200px !important;}
+
+.modal-table-btm tr {text-align: center !important; padding-left: 0px !important;}

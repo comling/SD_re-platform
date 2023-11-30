@@ -1,8 +1,10 @@
 package kr.techdna.replatform2023.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import kr.techdna.replatform2023.dto.ResAsData;
 import kr.techdna.replatform2023.dto.ResBusinessData;
 import kr.techdna.replatform2023.dto.SearchDto;
+import kr.techdna.replatform2023.service.AsDataService;
 import kr.techdna.replatform2023.service.BusinessDataService;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -38,6 +40,7 @@ import java.util.Map;
 public class RestApiController {
 
     private final BusinessDataService businessDataService;
+    private final AsDataService asDataService;
 
     /**
      *  홈 화면 조회용
@@ -132,5 +135,11 @@ public class RestApiController {
     }
 
 
+    /* BusinessData 상세 조회시 해당 userID 기준으로 AS data 목록 조회 */
+    @GetMapping("/getAsDataList")
+    public List<ResAsData> getAsDataListForBusinessData(@RequestParam Integer userID){
+        System.out.println(userID);
+        return businessDataService.getAsDataListForUserID(userID);
+    }
 
 }

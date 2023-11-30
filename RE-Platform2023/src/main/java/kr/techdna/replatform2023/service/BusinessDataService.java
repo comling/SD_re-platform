@@ -3,6 +3,7 @@ package kr.techdna.replatform2023.service;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.techdna.replatform2023.domain.BusinessData;
 import kr.techdna.replatform2023.dto.PaginationDto;
+import kr.techdna.replatform2023.dto.ResAsData;
 import kr.techdna.replatform2023.dto.ResBusinessData;
 import kr.techdna.replatform2023.dto.SearchDto;
 import kr.techdna.replatform2023.mapper.BusinessDataMapper;
@@ -133,6 +134,21 @@ public class BusinessDataService {
 
         // 게시글 리스트 조회
         List<ResBusinessData> list = businessDataMapper.getSearchBusinessDataListForExcelDownload(params);
+
+        return list;
+    }
+
+    public List<ResAsData> getAsDataListForUserID(Integer userID){
+        // 게시글 수 & 총 발전 용량 조회
+        int count = businessDataMapper.countForAsData(userID);
+        System.out.println(count);
+        // 등록된 게시글이 없는 경우, 로직 종료
+        if (count < 1) {
+            return null;
+        }
+
+        // 게시글 리스트 조회
+        List<ResAsData> list = businessDataMapper.selectForUserID(userID);
 
         return list;
     }
