@@ -16,13 +16,21 @@
             .rowBtn {cursor: pointer;}
             .rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
             .rowBtn:hover > td{color: #007aff !important;}
+
+            .top-table tr{border-bottom: 1px solid #ccc !important;}
+            .top-table th{width: 150px !important;}
+            .top-table td{width: calc(100% - 150px) !important;}
+            .top-table th{font-weight: 700 !important;}
+
+            .radio-area > input {margin-left: 20px;}
+            .radio-area > label {width: 100px;}
         </style>
 
     <div class="main-content w1200">
-        <div class="main-top">
+        <div class="main-top" style="height: 370px;">
             <div class="flex justify_space_around">
                 <div class="main-card-sector w-300">
-                    <h3 class="tit-main" style="color: black;font-size: x-large;">지역별 설치 현황 </h3>
+                    <h3 class="tit-main" style="color: black;font-size: x-large;">사업별 설치 현황 </h3>
                     <div class="height-60 mg-left30 text-right">
                         <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>
                     </div>
@@ -53,6 +61,44 @@
                         <span> kWp</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="basicTable">
+                <table class="table top-table mg-top10 mg-btm10">
+                    <thead>
+                        <tr>
+                            <th>사업명</th>
+                            <td>
+                                <div class="flex align_center radio-area">
+                                    <input type="radio" name="bname" id="mix-sup"><label for="mix-sup">융복합지원</label>
+                                    <input type="radio" name="bname" id="joo-sup"><label for="joo-sup">주택지원</label>
+                                    <input type="radio" name="bname" id="gun-sup"><label for="gun-sup">건물지원</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>시설구분</th>
+                            <td>
+                                <div class="flex align_center radio-area">
+                                    <input type="radio" name="facilityType" id="gunmul"><label for="gunmul">건물</label>
+                                    <input type="radio" name="facilityType" id="jootek"><label for="jootek">주택</label>
+                                    <input type="radio" name="facilityType" id="baljunso"><label for="baljunso">발전소</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>에너지원</th>
+                            <td>
+                                <div class="flex align_center radio-area">
+                                    <input type="radio" name="enrgy" id="sunSolar1"><label for="sunSolar1">태양광</label>
+                                    <input type="radio" name="enrgy" id="sunSolar2"><label for="sunSolar2">태양열</label>
+                                    <input type="radio" name="enrgy" id="earth"><label for="earth">지열</label>
+                                    <input type="radio" name="enrgy" id="battery"><label for="battery">연료전지</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
             </div>
 
             <div class="flex search-filter-box">

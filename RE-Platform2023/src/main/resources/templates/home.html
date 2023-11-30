@@ -5,14 +5,10 @@
     <th:block layout:fragment="content">
         <input type="hidden" name="pageName" th:value="${pageName}">
         <style>
-            .businessTable th:nth-child(1), td:nth-child(1){width: 70px;}
-            .businessTable th:nth-child(2), td:nth-child(2){width: 110px;}
-            .businessTable th:nth-child(3), td:nth-child(3){width: 110px;}
-            .businessTable th:nth-child(4), td:nth-child(4){width: 110px;}
-            .businessTable th:nth-child(5), td:nth-child(5){width: 80px;}
-            .businessTable th:nth-child(6), td:nth-child(6){width: 200px;}
-            .businessTable th:nth-child(7), td:nth-child(7){width: 110px;}
-            .businessTable th:nth-child(8), td:nth-child(8){width: 10px;}
+            .businessTable th:nth-child(1), td:nth-child(1){width: 220px;}
+            .businessTable th:nth-child(2), td:nth-child(2){width: 220px;}
+            .businessTable th:nth-child(3), td:nth-child(3){width: 220px;}
+            .businessTable th:nth-child(4), td:nth-child(4){width: 10px;}
         </style>
 
     <div class="main-content w1200 flex">
@@ -71,31 +67,20 @@
                 <table class="table businessTable">
                     <thead>
                     <tr>
-                        <th>no</th>
                         <th>지역명</th>
-                        <th>시설구분</th>
-                        <th>에너지원</th>
-                        <th>사업연도</th>
-                        <th>신청자명</th>
+                        <th>설비개소</th>
                         <th>설비용량</th>
                         <th><a><i class="fas fa-plus"></i></a></th>
                     </tr>
                     </thead>
                     <tbody id="dataList">
-                        <tr ng-if="boardData.content.length === 0">
-                            <td colspan="9">검색 결과 없음</td>
+                        <tr ng-if="boardData.list.length === 0">
+                            <td colspan="4">검색 결과 없음</td>
                         </tr>
                         <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" style="line-height: 170%;">
-                            <td>{{item.userID}}</td>
                             <td>{{item.sigungu}}</td>
-                            <td>{{item.facilityType}}</td>
-                            <td>{{item.energy}}</td>
-                            <td>{{item.byear}}</td>
-                            <td>{{item.applicantName}}</td>
-                            <td>{{item.capacity}}
-                                <span ng-if="item.energy == '태양광'">kWp</span>
-                                <span ng-if="item.energy == '태양열'">m<sup>2</sup></span>
-                            </td>
+                            <td>{{item.cnt | number}}</td>
+                            <td>{{item.sum | number:2}} <span>kWp</span></td>
                             <td></td>
                         </tr>
                     </tbody>

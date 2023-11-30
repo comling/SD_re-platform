@@ -3,6 +3,7 @@ package kr.techdna.replatform2023.mapper;
 import kr.techdna.replatform2023.dto.ResAsData;
 import kr.techdna.replatform2023.dto.ResBusinessData;
 import kr.techdna.replatform2023.dto.SearchDto;
+import kr.techdna.replatform2023.dto.TotDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public interface BusinessDataMapper {
 
     int count(final SearchDto params);
     Map<String, Object> countAndSumCapacity(final SearchDto params);
+    List<TotDTO> selectMainAggr();
 
     List<ResBusinessData> getBusinessDataList(final SearchDto params);
     List<ResBusinessData> getSearchBusinessDataList(final SearchDto params);

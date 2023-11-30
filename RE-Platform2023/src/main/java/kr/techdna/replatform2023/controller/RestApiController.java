@@ -65,6 +65,12 @@ public class RestApiController {
         return businessDataService.getBusinessDataList(params);
     }
 
+    /* 메인페이지 집계용 */
+    @GetMapping("/getHomeMainAggrList")
+    public Map<String, Object> getHomeMainAggrList(){
+        return businessDataService.selectMainAggr();
+    }
+
     /**
      * 전체 조회용 매서드
      * @param params

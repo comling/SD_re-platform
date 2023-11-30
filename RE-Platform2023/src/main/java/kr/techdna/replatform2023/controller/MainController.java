@@ -30,6 +30,14 @@ public class MainController {
         return mav;
     }
 
+    @RequestMapping("/business")
+    public ModelAndView business(){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("pageName", "business");
+        mav.setViewName("business");
+        return mav;
+    }
+
     @RequestMapping("/map")
     public ModelAndView map(){
         ModelAndView mav = new ModelAndView();

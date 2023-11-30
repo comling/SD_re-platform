@@ -90,9 +90,11 @@ function MainController(
         });
 
         if($scope.global.pageName =='home'){
+            getHomeMainAggrList();
             getMinMaxYear();
             getSumCapacity();
-            $scope.getSearchBusinessDataList($scope.searchDto);
+            // $scope.getSearchBusinessDataList($scope.searchDto);
+
         } else if($scope.global.pageName =='local'){
             getMinMaxYear();
             getSearchFilter();
@@ -103,6 +105,8 @@ function MainController(
             getSearchFilter();
             $scope.searchDto.size = 1000;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
+        } else if($scope.global.pageName === 'business'){
+            $scope.getSearchBusinessDataList($scope.searchDto);
         }
     });
 
@@ -201,6 +205,19 @@ function MainController(
         doRequest(url, '', function(result){
             console.log("getSumCount : " , result),
                 $scope.sumCount = result.data;
+            $("#loading").hide();
+        }, 'GET');
+    }
+
+    /*메인 홈화면 집계용*/
+    function getHomeMainAggrList(){
+        $("#loading").show();
+        const url = '/api/getHomeMainAggrList';
+        doRequest(url, '', function(result){
+            console.log("getHomeMainAggrList : " , result),
+                $scope.boardData.list = result.data.list;
+                $scope.pagination.total = result.data.count;
+                $scope.pagination.totalSumCapacity = result.data.sumCapacity;
             $("#loading").hide();
         }, 'GET');
     }
