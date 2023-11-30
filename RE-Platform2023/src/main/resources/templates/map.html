@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="content">
+    <input type="hidden" name="pageName" th:value="${pageName}">
+
+
+    <div class="main-content w1200">
+        <div class="main-top" style="height: 60px;">
+            <div class="flex search-filter-box">
+                <div class="flex" style="width: 70%;">
+                    <!-- 사업명 -->
+                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME">
+                        <option selected>사업명</option>
+                        <option ng-repeat="item in onSearchFilter.BNAME">{{item}}</option>
+                    </select>
+                    <!-- 시설구분 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType">
+                        <option selected>시설구분</option>
+                        <option ng-repeat="item in onSearchFilter.facilityType">{{item}}</option>
+                    </select>
+                    <!-- 에너지원 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy">
+                        <option selected>에너지원</option>
+                        <option ng-repeat="item in onSearchFilter.energy">{{item}}</option>
+                    </select>
+                    <!-- 사업연도 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR">
+                        <option selected>사업연도</option>
+                        <option ng-repeat="item in onSearchFilter.BYEAR">{{item}}</option>
+                    </select>
+                    <!-- 시/군구 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu">
+                        <option selected>시/군/구</option>
+                        <option ng-repeat="item in onSearchFilter.sigungu">{{item}}</option>
+                    </select>
+                </div>
+                <div class="flex mg-left30 justify-content-end" style="width: 30%;">
+                    <input class="input_style" ng-model="searchDto.keyword" placeholder="직접 입력" type="text"
+                           ng-keypress="keypressSearch(event=$event)">
+                    <button class="btn-blue" ng-click="getSearchBusinessDataList(searchDto, addMarkerResponse);">검색</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-bottom">
+            <div id="map" style="width:1100px;height:800px;"></div>
+        </div>
+
+        <!-- S:모달 디테일 창 -->
+        <div class="modal-wrap js-modal" id="businessData-modal">
+            <div class="modal-inner size-normal">
+                <div class="modal-head">
+                    <h2></h2>
+                    <button class="btn-close js-modal-close" ng-click="closeNaraModal('businessData-modal')">CLOSE</button>
+                </div>
+                <div class="modal-body">
+                    <h2></h2>
+                    <br>
+
+                    <h4>상세정보</h4>
+                    <div class="basicTable">
+                        <table class="table">
+                            <tbody class="non_tr_style">
+                            <tr>
+                                <th>사업연도</th>
+                                <td title=""></td>
+                                <th>사업명</th>
+                                <td title=""></td>
+                                <th>주관기관</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>신청자명</th>
+                                <td></td>
+                                <th>신청자 연락처</th>
+                                <td></td>
+                                <th>주관부서</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>설치용량</th>
+                                <td></td>
+                                <th>설치형태</th>
+                                <td></td>
+                                <th>설치장소</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>에너지원</th>
+                                <td></td>
+                                <th>시공업체</th>
+                                <td></td>
+                                <th>모니터링 설치유무</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>시설형태</th>
+                                <td></td>
+                                <th>시공업체 연락처</th>
+                                <td></td>
+                                <th>비고</th>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>AS 이력</h4>
+                    <div class="flex">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- E:모달 디테일 창 -->
+    </div>
+</th:block>
+
+<!--</section>-->
+</html>

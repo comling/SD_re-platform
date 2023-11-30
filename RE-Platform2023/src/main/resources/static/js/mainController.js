@@ -97,6 +97,11 @@ function MainController(
             getMinMaxYear();
             getSearchFilter();
             $scope.getSearchBusinessDataList($scope.searchDto);
+        } else if ($scope.global.pageName === 'map') {
+            loadKAKAOMap();
+            getSearchFilter();
+            $scope.searchDto.size = 200;
+            $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         }
     });
 
@@ -216,7 +221,7 @@ function MainController(
     }
 
     /* local - search for filter */
-    $scope.getSearchBusinessDataList = function(searchDto){
+    $scope.getSearchBusinessDataList = function(searchDto, callback){
         $("#loading").show();
         console.log("searchDto : ", searchDto)
         let body = {
@@ -251,7 +256,7 @@ function MainController(
             },
         }).then( function (result) {
             console.log("getSearchBusinessDataList : " , result);
-
+            callback && callback(result);
             $scope.boardData = result.data;
             $scope.pagination = pagination(result.data.params.pagination.totalRecordCount, result.data.params.offset,
                                         result.data.params.size, result.data.params.pageSize,
@@ -423,6 +428,60 @@ function MainController(
         })
     }
 
+    var markers = [];
+    var map;
+    function loadKAKAOMap() {
+        const container = document.getElementById('map') //지도를 담을 영역의 DOM 레퍼런스
+            , options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(37.4678, 127.511), //지도의 중심좌표.
+            level: 10 //지도의 레벨(확대, 축소 정도)
+        };
+        map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    }
+
+    function addMarker(position, info) {
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: position,
+            clickable: true
+        });
+        marker.info = info;
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+        kakao.maps.event.addListener(marker, 'click', function() {
+            $scope.openModal('businessData-modal', marker.info);
+        })
+        // 생성된 마커를 배열에 추가합니다
+        markers.push(marker);
+    }
+    function delMarker() {
+        markers = [];
+    }
+    // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+    function setMarkers(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    // "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+    function showMarkers() {
+        setMarkers(map)
+    }
+
+    // "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+    function hideMarkers() {
+        setMarkers(null);
+    }
+
+    $scope.addMarkerResponse = function (response) {
+        hideMarkers();
+        delMarker();
+        response.data.list.forEach(item => {
+            addMarker(new kakao.maps.LatLng(item.entY, item.entX), item)
+        })
+        showMarkers();
+    }
 
     /**
      * 통신 함수

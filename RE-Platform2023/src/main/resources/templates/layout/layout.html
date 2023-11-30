@@ -17,8 +17,10 @@
     <script type="text/javascript" th:src="@{/js/ng-common.js}"></script>
     <script type="text/javascript" th:src="@{/js/pagination.component.js}"></script>
 
-    <script type="text/javascript" th:src="@{/js/mainController.js}"></script>
+    <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=56c2e1403b149f06f19887595cb9e126&libraries=services,clusterer,drawing"></script>
 
+    <script type="text/javascript" th:src="@{/js/mainController.js}"></script>
 
     <!-- footer slide 용 slick lib 추가 -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
