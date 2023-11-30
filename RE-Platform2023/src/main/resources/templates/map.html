@@ -7,6 +7,40 @@
 
     <div class="main-content w1200">
         <div class="main-top" style="height: 60px;">
+<!--            <div class="flex justify_space_around">-->
+<!--                <div class="main-card-sector w-300">-->
+<!--                    <h3 class="tit-main" style="color: black;font-size: x-large;">지역별 설치 현황 </h3>-->
+<!--                    <div class="height-60 mg-left30 text-right">-->
+<!--                        <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="main-card-sector mg-left30 w-300">-->
+<!--                    <h3 class="tit-main">총 설비 개소</h3>-->
+<!--                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>-->
+<!--                    <div class="flex flex-end total-area height-60">-->
+<!--                        <span>조회기간 </span>-->
+<!--                        <span>{{yearData.min}} ~ {{yearData.max}}</span>-->
+<!--                        <p>-->
+<!--                            <img th:src="@{/img/img_solarPn.png}"/>-->
+<!--                            {{ pagination.total | number}}-->
+<!--                        </p>-->
+<!--                        <span> 개소</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="main-card-sector mg-left30 w-300">-->
+<!--                    <h3 class="tit-main">총 설비 용량</h3>-->
+<!--                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>-->
+<!--                    <div class="flex flex-end total-area height-60">-->
+<!--                        <span>조회기간</span>-->
+<!--                        <span>{{yearData.min}} ~ {{yearData.max}}</span>-->
+<!--                        <p>-->
+<!--                            <img th:src="@{/img/img_house.png}"/>-->
+<!--                            {{ pagination.totalSumCapacity | number:2 }}-->
+<!--                        </p>-->
+<!--                        <span> kWp</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="flex search-filter-box">
                 <div class="flex" style="width: 70%;">
                     <!-- 사업명 -->
@@ -43,61 +77,98 @@
             </div>
         </div>
         <div class="main-bottom">
-            <div id="map" style="width:1100px;height:800px;"></div>
+            <div id="map" style="width:1150px;height:800px;"></div>
+            <div class="flex" style="background:#ffffff;width:450px;height: 600px; position:absolute; left:calc(50% - 600px);top:260px;z-index:2;">
+                <div style="margin:20px;">
+                    <div class="justify_space_around">
+                        <div class="main-card-sector w-300">
+                            <h3 class="tit-main" style="color: black;font-size: x-large;">지역별 설치 현황 </h3>
+                            <div class="height-60 mg-left30 text-right">
+                                <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>
+                            </div>
+                        </div>
+                        <div class="main-card-sector w-300">
+                            <h3 class="tit-main">총 설비 개소</h3>
+                            <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>
+                            <div class="flex flex-end total-area height-60">
+                                <span>조회기간 </span>
+                                <span>{{yearData.min}} ~ {{yearData.max}}</span>
+                                <p>
+                                    <img th:src="@{/img/img_solarPn.png}"/>
+                                    {{ pagination.total | number}}
+                                </p>
+                                <span> 개소</span>
+                            </div>
+                        </div>
+                        <div class="main-card-sector w-300">
+                            <h3 class="tit-main">총 설비 용량</h3>
+                            <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>
+                            <div class="flex flex-end total-area height-60">
+                                <span>조회기간</span>
+                                <span>{{yearData.min}} ~ {{yearData.max}}</span>
+                                <p>
+                                    <img th:src="@{/img/img_house.png}"/>
+                                    {{ pagination.totalSumCapacity | number:2 }}
+                                </p>
+                                <span> kWp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
 
         <!-- S:모달 디테일 창 -->
         <div class="modal-wrap js-modal" id="businessData-modal">
             <div class="modal-inner size-normal">
                 <div class="modal-head">
-                    <h2></h2>
+                    <h2>{{detailModalData.userID}}  |  {{detailModalData.applicantName}}</h2>
                     <button class="btn-close js-modal-close" ng-click="closeNaraModal('businessData-modal')">CLOSE</button>
                 </div>
                 <div class="modal-body">
-                    <h2></h2>
-                    <br>
-
                     <h4>상세정보</h4>
                     <div class="basicTable">
-                        <table class="table">
+                        <table class="table modal-table">
                             <tbody class="non_tr_style">
                             <tr>
                                 <th>사업연도</th>
-                                <td title=""></td>
+                                <td title="">{{detailModalData.byear}}</td>
                                 <th>사업명</th>
-                                <td title=""></td>
+                                <td title="">{{detailModalData.bname}}</td>
                                 <th>주관기관</th>
-                                <td></td>
+                                <td>{{detailModalData.organization}}</td>
                             </tr>
                             <tr>
                                 <th>신청자명</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantName}}</td>
                                 <th>신청자 연락처</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantPhone}}</td>
                                 <th>주관부서</th>
-                                <td></td>
+                                <td>{{detailModalData.department}}</td>
                             </tr>
                             <tr>
                                 <th>설치용량</th>
-                                <td></td>
+                                <td>{{detailModalData.capacity}}</td>
                                 <th>설치형태</th>
-                                <td></td>
+                                <td>{{detailModalData.installType}}</td>
                                 <th>설치장소</th>
-                                <td></td>
+                                <td>{{detailModalData.applicantAddress}}</td>
                             </tr>
                             <tr>
                                 <th>에너지원</th>
-                                <td></td>
+                                <td>{{detailModalData.energy}}</td>
                                 <th>시공업체</th>
-                                <td></td>
+                                <td>{{detailModalData.constructionCompany}}</td>
                                 <th>모니터링 설치유무</th>
-                                <td></td>
+                                <td>{{detailModalData.monitoring}}</td>
                             </tr>
                             <tr>
                                 <th>시설형태</th>
-                                <td></td>
+                                <td>{{detailModalData.facilityType}}</td>
                                 <th>시공업체 연락처</th>
-                                <td></td>
+                                <td>{{detailModalData.constructionCompany}}</td>
                                 <th>비고</th>
                                 <td></td>
                             </tr>
@@ -105,10 +176,22 @@
                         </table>
                     </div>
 
-                    <h4>AS 이력</h4>
-                    <div class="flex">
-
-                    </div>
+<!--                    <br>-->
+<!--                    <h4>AS 이력</h4>-->
+<!--                    <div class="basicTable">-->
+<!--                        <table class="table modal-table-btm">-->
+<!--                            <tr>-->
+<!--                                <th>발생일</th>-->
+<!--                                <th>내용</th>-->
+<!--                                <th>처리현황</th>-->
+<!--                            </tr>-->
+<!--                            <tr ng-repeat="item in detailModalData.asData">-->
+<!--                                <td>{{item.asDate}}</td>-->
+<!--                                <td>{{item.asDescription}}</td>-->
+<!--                                <td>{{item.asStatus}}</td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                    </div>-->
 
                 </div>
             </div>

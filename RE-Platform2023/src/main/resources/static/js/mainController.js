@@ -99,8 +99,9 @@ function MainController(
             $scope.getSearchBusinessDataList($scope.searchDto);
         } else if ($scope.global.pageName === 'map') {
             loadKAKAOMap();
+            getMinMaxYear();
             getSearchFilter();
-            $scope.searchDto.size = 200;
+            $scope.searchDto.size = 1000;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         }
     });
@@ -434,9 +435,17 @@ function MainController(
         const container = document.getElementById('map') //지도를 담을 영역의 DOM 레퍼런스
             , options = { //지도를 생성할 때 필요한 기본 옵션
             center: new kakao.maps.LatLng(37.4678, 127.511), //지도의 중심좌표.
-            level: 10 //지도의 레벨(확대, 축소 정도)
+            level: 7 //지도의 레벨(확대, 축소 정도)
         };
         map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    }
+
+    function setCenter(position) {
+        // 이동할 위도 경도 위치를 생성합니다
+        var moveLatLon = position;
+
+        // 지도 중심을 이동 시킵니다
+        map.setCenter(moveLatLon);
     }
 
     function addMarker(position, info) {
@@ -477,9 +486,15 @@ function MainController(
     $scope.addMarkerResponse = function (response) {
         hideMarkers();
         delMarker();
+        let x = 0;
+        let y = 0;
         response.data.list.forEach(item => {
             addMarker(new kakao.maps.LatLng(item.entY, item.entX), item)
+            x += item.entX
+            y += item.entY
         })
+        const length = response.data.list.length
+        setCenter(new kakao.maps.LatLng(y/length, x/length))
         showMarkers();
     }
 
