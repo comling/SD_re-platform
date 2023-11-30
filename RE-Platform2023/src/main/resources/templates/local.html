@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!--    <section class="main-content w1200" th:fragment="contentFragment">-->
     <th:block layout:fragment="content">
         <input type="hidden" name="pageName" th:value="${pageName}">
         <style>
@@ -113,7 +112,7 @@
                         <tr ng-if="boardData.list.length === 0">
                             <td colspan="8">검색 결과 없음</td>
                         </tr>
-                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size">
+                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" ng-click="openModal('businessData-modal', item);">
                             <td>{{item.userID}}</td>
                             <td>{{item.bname}}</td>
                             <td>{{item.facilityType}}</td>
@@ -129,18 +128,91 @@
             </div>
 
             <!-- 페이지네이션 Rendering 영역 -->
-            <nav>
-                <div th:insert="~{/pagination.component.html::pagination}"></div>
-                <td-search-pagination
+            <td-search-pagination
                         context="pagination"
                         on-page="goBoardPage($event)"></td-search-pagination>
-            </nav>
+
         </div>
+
+
+
+
+
+        <!-- S:모달 디테일 창 -->
+        <div class="modal-wrap js-modal" id="businessData-modal">
+            <div class="modal-inner size-normal">
+                <div class="modal-head">
+                    <h2></h2>
+                    <button class="btn-close js-modal-close" ng-click="closeNaraModal('businessData-modal')">CLOSE</button>
+                </div>
+                <div class="modal-body">
+                    <h2></h2>
+                    <br>
+
+                    <h4>상세정보</h4>
+                    <div class="basicTable">
+                        <table class="table">
+                            <tbody class="non_tr_style">
+                            <tr>
+                                <th>사업연도</th>
+                                <td title=""></td>
+                                <th>사업명</th>
+                                <td title=""></td>
+                                <th>주관기관</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>신청자명</th>
+                                <td></td>
+                                <th>신청자 연락처</th>
+                                <td></td>
+                                <th>주관부서</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>설치용량</th>
+                                <td></td>
+                                <th>설치형태</th>
+                                <td></td>
+                                <th>설치장소</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>에너지원</th>
+                                <td></td>
+                                <th>시공업체</th>
+                                <td></td>
+                                <th>모니터링 설치유무</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>시설형태</th>
+                                <td></td>
+                                <th>시공업체 연락처</th>
+                                <td></td>
+                                <th>비고</th>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>AS 이력</h4>
+                    <div class="flex">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- E:모달 디테일 창 -->
+
+
+
 
 
     </div>
     </th:block>
-
 
 <!--</section>-->
 </html>

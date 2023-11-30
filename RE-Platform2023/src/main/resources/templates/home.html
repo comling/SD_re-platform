@@ -112,59 +112,5 @@
     </div>
     </th:block>
 
-
-    <th:block layout:fragment="script">
-<!--        <script th:inline="javascript">-->
-<!--            /*<![CDATA[*/-->
-<!--            /**-->
-<!--             * 페이지 로딩 시점에 실행되는 함수-->
-<!--             */-->
-<!--            window.onload = () => {-->
-<!--                findAll()-->
-<!--            }-->
-
-<!--            /**-->
-<!--             * 게시글 리스트 조회-->
-<!--             */-->
-<!--            function findAll(page, size, sort){-->
-<!--                page = page | 0;-->
-<!--                size = size | 10;-->
-<!--                let url = '/api/getBusinessDataListSearch?page=' + page + '&size=' + size;-->
-<!--                fetch(url).then(response => {-->
-<!--                    if (response.ok) {-->
-<!--                        console.log(response)-->
-<!--                        return response.json();-->
-<!--                    }-->
-<!--                }).then(json => {-->
-<!--                    let html = '';-->
-<!--                    console.log(json);-->
-
-<!--                    if (json.totalElements == 0) {-->
-<!--                        html = '<td colspan="8">등록된 게시글이 없습니다.</td>';-->
-<!--                    } else {-->
-<!--                        json.content.forEach((obj, idx) => {-->
-<!--                            html += `-->
-<!--							<tr>-->
-<!--    							<td>${obj.userID}</td>-->
-<!--    							<td>-->
-<!--    								<a href="javascript: void(0);">${obj.sigungu}</a>-->
-<!--    							</td>-->
-<!--    							<td>${obj.facilityType}</td>-->
-<!--    							<td>${obj.energy}</td>-->
-<!--    							<td>${obj.byear}</td>-->
-<!--    							<td>${obj.applicantName}</td>-->
-<!--    							<td>${obj.capacity}</td>-->
-<!--    							<td></td>-->
-<!--							</tr>-->
-<!--						`;-->
-<!--                        });-->
-<!--                    }-->
-
-<!--                    document.getElementById('dataList').innerHTML = html;-->
-<!--                });-->
-<!--            }-->
-<!--            /*]]>*/-->
-<!--        </script>-->
-    </th:block>
 <!--</section>-->
 </html>

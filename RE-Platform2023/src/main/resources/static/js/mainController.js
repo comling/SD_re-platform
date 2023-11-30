@@ -366,6 +366,22 @@ function MainController(
     }
 
 
+    $scope.mdzIndex = 10;
+    /* 상세 페이지 오픈 */
+    $scope.openModal = function (mdId, data) {
+        console.log(data);
+
+        $scope.mdzIndex++;
+        if (mdId === null || mdId === '') return true;
+        $('#' + mdId).addClass('js-is-active').css({'z-index': $scope.mdzIndex});
+    }
+    $scope.closeNaraModal = function (mdId) {
+        $('#' + mdId).removeClass('js-is-active').css({'z-index': ''});
+        if ($('.js-modal.js-is-active').length === 0) {
+            $scope.mdzIndex = 10;
+        }
+    }
+
 
 
     /* 메뉴 준비중 알랏 */
