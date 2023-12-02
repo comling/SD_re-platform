@@ -123,6 +123,10 @@ public class BusinessDataService {
         return searchFilter;
     }
 
+    public List<String> getEupMyeonForSigungu(String sigungu){
+        return businessDataMapper.getSearchFilterEupMyeon(sigungu);
+    }
+
     public Map<String, Object> getSearchBusinessDataList(SearchDto params){
         Map<String, Object> response = new HashMap<>();
 

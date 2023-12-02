@@ -35,6 +35,7 @@ public interface BusinessDataMapper {
     List<String> getSearchFilterFacilityType();
     List<String> getSearchFilterEnergy();
     List<String> getSearchFilterSigungu();
+    List<String> getSearchFilterEupMyeon(String sigungu);
 
 
 }

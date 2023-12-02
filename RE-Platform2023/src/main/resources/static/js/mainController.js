@@ -67,7 +67,8 @@ function MainController(
             facilityType: '시설구분',   //'시설구분'
             energy: '에너지원',         //'에너지원'
             BYEAR: '사업연도',          //'사업연도'
-            sigungu: '시/군/구'         //'시/군/구'
+            sigungu: '시/군/구',         //'시/군/구'
+            eupMyeon: '읍/면'
         }
     }
 
@@ -98,13 +99,26 @@ function MainController(
         } else if($scope.global.pageName =='local'){
             getMinMaxYear();
             getSearchFilter();
-            $scope.getSearchBusinessDataList($scope.searchDto);
+            // 메인 화면에서 지역별 설치현황 이동시 해당 지역현황 로드
+            if($scope.global.sigungu != ''){
+                console.log("파라미터 : ", $scope.global.sigungu)
+                $scope.searchDto.searchFilter.sigungu = $scope.global.sigungu;
+                $scope.getSearchBusinessDataList($scope.searchDto);
+                $scope.global.sigungu = '';
+            } else {
+                $scope.getSearchBusinessDataList($scope.searchDto);
+            }
         } else if ($scope.global.pageName === 'map') {
             loadKAKAOMap();
             getSearchFilter();
             $scope.searchDto.size = 200;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         } else if($scope.global.pageName === 'business'){
+            getMinMaxYear();
+            getSearchFilter();
+            $scope.searchDto.searchFilter.BNAME = '주택지원';
+            $scope.searchDto.searchFilter.facilityType = '주택';
+            $scope.searchDto.searchFilter.energy = '태양광';
             $scope.getSearchBusinessDataList($scope.searchDto);
         }
     });
@@ -237,6 +251,34 @@ function MainController(
         }, 'GET');
     }
 
+    $scope.getEupMyeon = function(sigungu){
+        $("#loading").show();
+        const url = '/api/getEupMyeonSearchFilter?sigungu='+sigungu;
+        doRequest(url, '', function(result){
+            console.log("getEupMyeonSearchFilter : " , result),
+                $scope.onSearchFilter.eupMyeon = result.data,
+                $scope.searchDto.searchFilter.eupMyeon = '읍/면',
+                console.log("$scope.onSearchFilter.eupMyeon :", $scope.onSearchFilter.eupMyeon),
+                $("#loading").hide();
+        }, 'GET');
+    }
+
+    function getSearchFilterChangeForRadio(group, id){
+        if(group == 'bname'){
+            $scope.searchDto.searchFilter.BNAME = document.getElementById(id).nextElementSibling.textContent;
+        } else if(group == 'facilityType'){
+            $scope.searchDto.searchFilter.facilityType = document.getElementById(id).nextElementSibling.textContent;
+        } else if(group == 'energy'){
+            $scope.searchDto.searchFilter.energy = document.getElementById(id).nextElementSibling.textContent;
+        }
+    }
+
+    /* 사업별 설치현황 상단 라디오 박스 핸들러 */
+    $('.searchRadio').click(function (){
+        console.log(this.name, this.id);
+        getSearchFilterChangeForRadio(this.name, this.id);
+    })
+
     /* local - search for filter */
     $scope.getSearchBusinessDataList = function(searchDto, callback){
         $("#loading").show();
@@ -251,7 +293,8 @@ function MainController(
                     facilityType: searchDto.searchFilter.facilityType,
                     energy: searchDto.searchFilter.energy,
                     BYEAR: searchDto.searchFilter.BYEAR,
-                    sigungu: searchDto.searchFilter.sigungu
+                    sigungu: searchDto.searchFilter.sigungu,
+                    eupMyeon: searchDto.searchFilter.eupMyeon
             }
         };
         /* 최초 검색시 초기화 */
@@ -260,6 +303,7 @@ function MainController(
         if(searchDto.searchFilter.energy === "에너지원") body.searchFilter.energy = "";
         if(searchDto.searchFilter.BYEAR === "사업연도") body.searchFilter.BYEAR = "";
         if(searchDto.searchFilter.sigungu === "시/군/구") body.searchFilter.sigungu = "";
+        if(searchDto.searchFilter.eupMyeon === "읍/면") body.searchFilter.eupMyeon = "";
         console.log("body : ", body)
 
         const url = '/api/getSearchBusinessDataList';
@@ -275,9 +319,18 @@ function MainController(
             console.log("getSearchBusinessDataList : " , result);
             callback && callback(result);
             $scope.boardData = result.data;
-            $scope.pagination = pagination(result.data.params.pagination.totalRecordCount, result.data.params.offset,
-                                        result.data.params.size, result.data.params.pageSize,
-                                        result.data.params.pagination.totalSumCapacity);
+            /* 데이터 없을 경우 result.data.params.pagination undefined로 return 받으므로 pagination 값 분기 적용 */
+            if(result.data.params.pagination != undefined && result.data.params.pagination != null){
+                $scope.pagination = pagination(result.data.params.pagination.totalRecordCount, result.data.params.offset,
+                    result.data.params.size, result.data.params.pageSize,
+                    result.data.params.pagination.totalSumCapacity);
+            } else {
+                $scope.pagination = pagination(0, result.data.params.offset,
+                    result.data.params.size, result.data.params.pageSize,
+                    0);
+            }
+
+            console.log("scope.pagination : ", $scope.pagination)
             $("#loading").hide();
         })
     }

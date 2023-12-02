@@ -13,9 +13,6 @@
             .businessTable th:nth-child(7), td:nth-child(7){width: 140px;}
             .businessTable th:nth-child(8), td:nth-child(8){width: 300px;}
 
-            .rowBtn {cursor: pointer;}
-            .rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
-            .rowBtn:hover > td{color: #007aff !important;}
 
             .top-table tr{border-bottom: 1px solid #ccc !important;}
             .top-table th{width: 150px !important;}
@@ -37,28 +34,32 @@
                 </div>
                 <div class="main-card-sector mg-left30 w-300">
                     <h3 class="tit-main">총 설비 개소</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>
+                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}}사업 총 설치 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간 </span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                        <p>
-                            <img th:src="@{/img/img_solarPn.png}"/>
-                            {{ pagination.total | number}}
-                        </p>
-                        <span> 개소</span>
+                        <div>
+                            <span>조회기간 </span>
+                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
+                        </div>
+                        <div>
+                            <p><img th:src="@{/img/img_solarPn.png}"/>{{ pagination.total | number }}</p>
+                            <span> 개소</span>
+                        </div>
                     </div>
                 </div>
                 <div class="main-card-sector mg-left30 w-300">
                     <h3 class="tit-main">총 설비 용량</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>
+                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}}사업 총 발전 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간</span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                        <p>
-                            <img th:src="@{/img/img_house.png}"/>
-                            {{ pagination.totalSumCapacity | number:2 }}
-                        </p>
-                        <span> kWp</span>
+                        <div>
+                            <span>조회기간</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
+                        </div>
+                        <div>
+                            <p><img th:src="@{/img/img_house.png}"/>{{ pagination.totalSumCapacity | number:2 }}</p>
+                            <span> kWp</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,9 +71,9 @@
                             <th>사업명</th>
                             <td>
                                 <div class="flex align_center radio-area">
-                                    <input type="radio" name="bname" id="mix-sup"><label for="mix-sup">융복합지원</label>
-                                    <input type="radio" name="bname" id="joo-sup"><label for="joo-sup">주택지원</label>
-                                    <input type="radio" name="bname" id="gun-sup"><label for="gun-sup">건물지원</label>
+                                    <input class="searchRadio" type="radio" name="bname" id="mix-sup"><label for="mix-sup">융복합지원</label>
+                                    <input class="searchRadio" type="radio" name="bname" id="joo-sup" checked><label for="joo-sup">주택지원</label>
+                                    <input class="searchRadio" type="radio" name="bname" id="gun-sup"><label for="gun-sup">건물지원</label>
                                 </div>
                             </td>
                         </tr>
@@ -80,9 +81,9 @@
                             <th>시설구분</th>
                             <td>
                                 <div class="flex align_center radio-area">
-                                    <input type="radio" name="facilityType" id="gunmul"><label for="gunmul">건물</label>
-                                    <input type="radio" name="facilityType" id="jootek"><label for="jootek">주택</label>
-                                    <input type="radio" name="facilityType" id="baljunso"><label for="baljunso">발전소</label>
+                                    <input class="searchRadio" type="radio" name="facilityType" id="gunmul"><label for="gunmul">건물</label>
+                                    <input class="searchRadio" type="radio" name="facilityType" id="jootek" checked><label for="jootek">주택</label>
+                                    <input class="searchRadio" type="radio" name="facilityType" id="baljunso"><label for="baljunso">발전소</label>
                                 </div>
                             </td>
                         </tr>
@@ -90,10 +91,10 @@
                             <th>에너지원</th>
                             <td>
                                 <div class="flex align_center radio-area">
-                                    <input type="radio" name="enrgy" id="sunSolar1"><label for="sunSolar1">태양광</label>
-                                    <input type="radio" name="enrgy" id="sunSolar2"><label for="sunSolar2">태양열</label>
-                                    <input type="radio" name="enrgy" id="earth"><label for="earth">지열</label>
-                                    <input type="radio" name="enrgy" id="battery"><label for="battery">연료전지</label>
+                                    <input class="searchRadio" type="radio" name="energy" id="sunSolar1" checked><label for="sunSolar1">태양광</label>
+                                    <input class="searchRadio" type="radio" name="energy" id="sunSolar2"><label for="sunSolar2">태양열</label>
+                                    <input class="searchRadio" type="radio" name="energy" id="earth"><label for="earth">지열</label>
+                                    <input class="searchRadio" type="radio" name="energy" id="battery"><label for="battery">연료전지</label>
                                 </div>
                             </td>
                         </tr>
@@ -103,30 +104,20 @@
 
             <div class="flex search-filter-box">
                 <div class="flex" style="width: 70%;">
-                    <!-- 사업명 -->
-                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME">
-                        <option selected>사업명</option>
-                        <option ng-repeat="item in onSearchFilter.BNAME">{{item}}</option>
-                    </select>
-                    <!-- 시설구분 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType">
-                        <option selected>시설구분</option>
-                        <option ng-repeat="item in onSearchFilter.facilityType">{{item}}</option>
-                    </select>
-                    <!-- 에너지원 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy">
-                        <option selected>에너지원</option>
-                        <option ng-repeat="item in onSearchFilter.energy">{{item}}</option>
-                    </select>
                     <!-- 사업연도 -->
                     <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR">
                         <option selected>사업연도</option>
                         <option ng-repeat="item in onSearchFilter.BYEAR">{{item}}</option>
                     </select>
-                    <!-- 시/군구 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu">
+                    <!-- 시/군/구 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu" ng-change="getEupMyeon(searchDto.searchFilter.sigungu)">
                         <option selected>시/군/구</option>
                         <option ng-repeat="item in onSearchFilter.sigungu">{{item}}</option>
+                    </select>
+                    <!-- 읍/면 -->
+                    <select ng-if="onSearchFilter.eupMyeon != undefined" class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.eupMyeon" ng-change="getSearchBusinessDataList(searchDto)">
+                        <option selected>읍/면</option>
+                        <option ng-repeat="item in onSearchFilter.eupMyeon">{{item}}</option>
                     </select>
                 </div>
                 <div class="flex mg-left30 justify-content-end" style="width: 30%;">

@@ -103,6 +103,9 @@
                 <if test="searchFilter.sigungu.equals('') == false">
                     AND Sigungu = #{searchFilter.sigungu}
                 </if>
+                <if test="searchFilter.eupMyeon.equals('') == false">
+                    AND EupMyeon = #{searchFilter.eupMyeon}
+                </if>
             </if>
         </trim>
     </sql>
@@ -176,6 +179,10 @@
     <select id="getSearchFilterSigungu" resultType="string">
         SELECT DISTINCT Sigungu FROM Business_data;
     </select>
+    <select id="getSearchFilterEupMyeon" parameterType="java.lang.String" resultType="string">
+        SELECT DISTINCT EupMyeon FROM Business_data
+        WHERE Sigungu = #{sigungu}
+    </select>
 
     <!-- 검색 및 페이지네이션 용 -->
     <select id="getSearchBusinessDataList" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
@@ -220,4 +227,21 @@
             UserID DESC, No DESC
     </select>
 
+    <select id="selectASdataJoinBusinessData" parameterType="kr.techdna.replatform2023.dto.SearchDto">
+        SELECT
+            bd.*, ad.No, ad.AS_date, ad.AS_description, ad.AS_status
+        FROM
+            Business_data bd
+                LEFT OUTER JOIN AS_data ad ON ad.`No` = (
+                SELECT
+                    MAX(`No`)
+                FROM
+                    AS_data ad2
+                WHERE
+                    ad2.UserID = bd.UserID
+            )
+        <include refid="conditions-sub" />
+        AND ad.AS_status IS NOT NULL
+        ORDER BY bd.UserID DESC
+    </select>
 </mapper>

@@ -115,6 +115,11 @@ public class RestApiController {
     public Map<String, Object> getSearchFilter(){
         return businessDataService.getSearchFilter();
     }
+    /* 시군구에 따른 읍면동 로드 */
+    @GetMapping("/getEupMyeonSearchFilter")
+    public List<String> getEupMyeonSearchFilter(@RequestParam String sigungu){
+        return businessDataService.getEupMyeonForSigungu(sigungu);
+    }
 
 
     /* Excel download */
