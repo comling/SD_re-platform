@@ -19,39 +19,9 @@
         <div class="main-top">
             <div class="flex justify_space_around">
                 <div class="main-card-sector w-300">
-                    <h3 class="tit-main" style="color: black;font-size: x-large;">지역별 설치 현황 </h3>
+                    <h3 class="tit-main" style="color: black;font-size: x-large;">A/S 이력 현황 </h3>
                     <div class="height-60 mg-left30 text-right">
                         <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>
-                    </div>
-                </div>
-                <div class="main-card-sector mg-left30 w-300">
-                    <h3 class="tit-main">총 설비 개소</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.sigungu != '시/군/구' ? searchDto.searchFilter.sigungu : '전체'}} 총 설치 현황</span>
-                    <div class="flex flex-end total-area height-60">
-                        <div>
-                            <span>조회기간 </span>
-                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
-                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
-                        </div>
-                        <div>
-                            <p><img th:src="@{/img/img_solarPn.png}"/>{{ pagination.total | number }}</p>
-                            <span> 개소</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="main-card-sector mg-left30 w-300">
-                    <h3 class="tit-main">총 설비 용량</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.sigungu != '시/군/구' ? searchDto.searchFilter.sigungu : '전체'}} 총 발전 현황</span>
-                    <div class="flex flex-end total-area height-60">
-                        <div>
-                            <span>조회기간</span>
-                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
-                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
-                        </div>
-                        <div>
-                            <p><img th:src="@{/img/img_house.png}"/>{{ pagination.totalSumCapacity | number:2 }}</p>
-                            <span> kWp</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -59,27 +29,27 @@
             <div class="flex search-filter-box">
                 <div class="flex" style="width: 70%;">
                     <!-- 사업명 -->
-                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME" ng-change="getSearchBusinessDataList(searchDto)">
+                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME" ng-change="getAsDataJoinBusinessDataList(searchDto)">
                         <option selected>사업명</option>
                         <option ng-repeat="item in onSearchFilter.BNAME">{{item}}</option>
                     </select>
                     <!-- 시설구분 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType" ng-change="getSearchBusinessDataList(searchDto)">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType" ng-change="getAsDataJoinBusinessDataList(searchDto)">
                         <option selected>시설구분</option>
                         <option ng-repeat="item in onSearchFilter.facilityType">{{item}}</option>
                     </select>
                     <!-- 에너지원 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy" ng-change="getSearchBusinessDataList(searchDto)">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy" ng-change="getAsDataJoinBusinessDataList(searchDto)">
                         <option selected>에너지원</option>
                         <option ng-repeat="item in onSearchFilter.energy">{{item}}</option>
                     </select>
                     <!-- 사업연도 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR" ng-change="getSearchBusinessDataList(searchDto)">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR" ng-change="getAsDataJoinBusinessDataList(searchDto)">
                         <option selected>사업연도</option>
                         <option ng-repeat="item in onSearchFilter.BYEAR">{{item}}</option>
                     </select>
                     <!-- 시/군구 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu" ng-change="getSearchBusinessDataList(searchDto)">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu" ng-change="getAsDataJoinBusinessDataList(searchDto)">
                         <option selected>시/군/구</option>
                         <option ng-repeat="item in onSearchFilter.sigungu">{{item}}</option>
                     </select>
@@ -87,7 +57,7 @@
                 <div class="flex mg-left30 justify-content-end" style="width: 30%;">
                     <input class="input_style" ng-model="searchDto.keyword" placeholder="직접 입력" type="text"
                            ng-keypress="keypressSearch(event=$event)">
-                    <button class="btn-blue" ng-click="getSearchBusinessDataList(searchDto);">검색</button>
+                    <button class="btn-blue" ng-click="getAsDataJoinBusinessDataList(searchDto);">검색</button>
                 </div>
             </div>
         </div>
@@ -95,36 +65,37 @@
         <div class="main-bottom">
             <div class="flex justify_between mg-btm10">
                 <button class="btn"><i class="far fa-compass"></i>&nbsp;&nbsp;지도보기</button>
-                <button class="btn" ng-click="excelDownload(searchDto)"><i class="fas fa-table"></i>&nbsp;&nbsp;내려받기</button>
+                <button class="btn" ng-click="excelDownload(searchDto, 'as')"><i class="fas fa-table"></i>&nbsp;&nbsp;내려받기</button>
             </div>
             <div class="basicTable">
                 <table class="table businessTable">
                     <thead>
                     <tr>
                         <th>no</th>
-                        <th>사업명</th>
-                        <th>시설구분</th>
-                        <th>에너지원</th>
                         <th>사업연도</th>
+                        <th>사업명</th>
+                        <th>에너지원</th>
                         <th>신청자명</th>
-                        <th>설비용량</th>
-                        <th>설치주소</th>
+                        <th>지역명</th>
+                        <th>A/S 발생일</th>
+                        <th>A/S 내용</th>
+                        <th>A/S 처리현황</th>
                     </tr>
                     </thead>
                     <tbody id="dataList">
                         <tr ng-if="boardData.list.length === 0">
-                            <td colspan="8">검색 결과 없음</td>
+                            <td colspan="9">검색 결과 없음</td>
                         </tr>
                         <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" class="rowBtn" ng-click="openModal('businessData-modal', item);">
                             <td>{{item.userID}}</td>
-                            <td>{{item.bname}}</td>
-                            <td>{{item.facilityType}}</td>
-                            <td>{{item.energy}}</td>
                             <td>{{item.byear}}</td>
+                            <td>{{item.energy}}</td>
+                            <td>{{item.bname}}</td>
                             <td>{{item.applicantName}}</td>
-                            <td>{{item.capacity}} <span>kWp</span>
-                            </td>
                             <td>{{item.applicantAddress}}</td>
+                            <td>{{item.asDate}}</td>
+                            <td>{{item.asDescription}}</td>
+                            <td>{{item.asStatus}}</td>
                         </tr>
                     </tbody>
                 </table>

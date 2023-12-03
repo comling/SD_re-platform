@@ -2,6 +2,7 @@ package kr.techdna.replatform2023.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.techdna.replatform2023.dto.ResAsData;
+import kr.techdna.replatform2023.dto.ResAsDataJoinBusinessData;
 import kr.techdna.replatform2023.dto.ResBusinessData;
 import kr.techdna.replatform2023.dto.SearchDto;
 import kr.techdna.replatform2023.service.AsDataService;
@@ -125,6 +126,7 @@ public class RestApiController {
     /* Excel download */
     @PostMapping("/excelDownload")
     public void excelDownload(@RequestParam Map<String, Object> body, HttpServletResponse response){
+        System.out.println(body);
             try{
                 SearchDto params = new SearchDto();
                 Map<String, Object> tmpMap = new HashMap<>();
@@ -138,12 +140,19 @@ public class RestApiController {
                 if(body.get("sigungu") != null) tmpMap.put("sigungu", body.get("sigungu"));
                 params.setSearchFilter(tmpMap);
 
-                List<ResBusinessData> data = businessDataService.geSearchBusinessDataListFortExcelDownload(params);
-                businessDataService.excelDataDownload(data, response);
+                if(body.get("type").equals("as")){
+                    List<ResAsDataJoinBusinessData> data = businessDataService.selectASdataJoinBusinessDataForExcelDownload(params);
+                    businessDataService.excelDataDownloadAs(data, response);
+                } else {
+                    List<ResBusinessData> data = businessDataService.geSearchBusinessDataListFortExcelDownload(params);
+                    businessDataService.excelDataDownload(data, response);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
     }
+
+
 
 
     /* BusinessData 상세 조회시 해당 userID 기준으로 AS data 목록 조회 */
@@ -151,6 +160,12 @@ public class RestApiController {
     public List<ResAsData> getAsDataListForBusinessData(@RequestParam Integer userID){
         System.out.println(userID);
         return businessDataService.getAsDataListForUserID(userID);
+    }
+
+    /* AS 이력 페이지 */
+    @PostMapping ("/getAsDataJoinBusinessDataList")
+    public Map<String, Object> getAsDataAndBusinessDataList(@RequestBody final SearchDto params){
+        return  businessDataService.getAsDataAndBusinessDataList(params);
     }
 
 }

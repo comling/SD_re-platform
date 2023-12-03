@@ -28,6 +28,7 @@ function searchPaginationComponent($scope) {
     self.sort = false;
     self.sortField = null;
     self.totalSumCapacity = 0;
+    self.pageName = this.pageName;
 
     self.reload = function(page) {
         if (self.sort){
@@ -102,6 +103,7 @@ function searchPaginationComponent($scope) {
         self.total = self.context.total;
         self.sort = self.context.sort;
         self.totalSumCapacity = self.context.totalSumCapacity;
+        self.pageName = self.context.pageName;
     };
 
     self.$onChanges = function(bound){
@@ -115,5 +117,6 @@ function searchPaginationComponent($scope) {
         self.total = ctx.total;
         self.sort = ctx.sort;
         self.totalSumCapacity = ctx.totalSumCapacity;
+        self.pageName = self.context.pageName;
     }
 }

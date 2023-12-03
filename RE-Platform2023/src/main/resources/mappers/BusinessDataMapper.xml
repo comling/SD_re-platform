@@ -37,6 +37,36 @@
         <result property="asDescription"           column="AS_description" />
         <result property="asStatus"                column="AS_status" />
     </resultMap>
+    <resultMap id="AsDataAndBusinessDataResultMap" type="kr.techdna.replatform2023.dto.ResAsDataJoinBusinessData">
+        <result property="userID"                 column="UserID" />
+        <result property="BYEAR"                  column="BYEAR" />
+        <result property="BNAME"                  column="BNAME" />
+        <result property="organization"           column="Organization" />
+        <result property="department"             column="Department" />
+        <result property="applicantName"          column="ApplicantName" />
+        <result property="applicantPhone"         column="ApplicantPhone" />
+        <result property="capacity"               column="Capacity" />
+        <result property="applicantAddress"       column="ApplicantAddress" />
+        <result property="address"                column="Address" />
+        <result property="roadAddress"            column="RoadAddress" />
+        <result property="bCode"                  column="Bcode" />
+        <result property="hCode"                  column="Hcode" />
+        <result property="sigungu"                column="Sigungu" />
+        <result property="eupMyeon"               column="EupMyeon" />
+        <result property="dong"                   column="Dong" />
+        <result property="energy"                 column="Energy" />
+        <result property="installType"            column="InstallType" />
+        <result property="constructionCompany"    column="ConstructionCompany" />
+        <result property="facilityType"           column="FacilityType" />
+        <result property="monitoring"             column="Monitoring" />
+        <result property="constructionNumber"     column="ConstructionNumber" />
+        <result property="entX"                   column="entX" />
+        <result property="entY"                   column="entY" />
+        <result property="no"                      column="No" />
+        <result property="asDate"                  column="AS_date" />
+        <result property="asDescription"           column="AS_description" />
+        <result property="asStatus"                column="AS_status" />
+    </resultMap>
 
     <!-- WHERE 조건 Main, TODO 차후 구현 예정 -->
     <sql id="conditions-main">
@@ -110,6 +140,40 @@
         </trim>
     </sql>
 
+    <!-- WHERE 조건 As -->
+    <sql id="conditions-as">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="keyword != null and keyword.equals('') == false">
+                (
+                Sigungu LIKE CONCAT('%', #{keyword}, '%')
+                OR BYEAR LIKE CONCAT('%', #{keyword}, '%')
+                OR BNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR ApplicantName LIKE CONCAT('%', #{keyword}, '%')
+                OR Energy LIKE CONCAT('%', #{keyword}, '%')
+                OR AS_description LIKE CONCAT('%', #{keyword}, '%')
+                OR AS_status LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchFilter != null">
+                <if test="searchFilter.BNAME.equals('') == false">
+                    AND BNAME = #{searchFilter.BNAME}
+                </if>
+                <if test="searchFilter.BYEAR != 0">
+                    AND BYEAR = #{searchFilter.BYEAR}
+                </if>
+                <if test="searchFilter.energy.equals('') == false">
+                    AND Energy = #{searchFilter.energy}
+                </if>
+                <if test="searchFilter.facilityType.equals('') == false">
+                    AND FacilityType = #{searchFilter.facilityType}
+                </if>
+                <if test="searchFilter.sigungu.equals('') == false">
+                    AND Sigungu = #{searchFilter.sigungu}
+                </if>
+            </if>
+        </trim>
+    </sql>
+
     <!-- 게시글 수 조회 -->
     <select id="count" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="int">
         SELECT
@@ -118,6 +182,14 @@
             Business_data
         <include refid="conditions-sub" />
     </select>
+    <select id="countForAsDataJoinBusinessData" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            AS_data_Join_Business_data
+        <include refid="conditions-as" />
+    </select>
+
 
     <!-- 전체 용량 조회 -->
     <select id="countAndSumCapacity" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="hashMap">
@@ -227,21 +299,28 @@
             UserID DESC, No DESC
     </select>
 
-    <select id="selectASdataJoinBusinessData" parameterType="kr.techdna.replatform2023.dto.SearchDto">
+    <!-- AS 이력 조회용 -->
+
+    <select id="selectASdataJoinBusinessData" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="AsDataAndBusinessDataResultMap">
         SELECT
-            bd.*, ad.No, ad.AS_date, ad.AS_description, ad.AS_status
+            *
         FROM
-            Business_data bd
-                LEFT OUTER JOIN AS_data ad ON ad.`No` = (
-                SELECT
-                    MAX(`No`)
-                FROM
-                    AS_data ad2
-                WHERE
-                    ad2.UserID = bd.UserID
-            )
-        <include refid="conditions-sub" />
-        AND ad.AS_status IS NOT NULL
-        ORDER BY bd.UserID DESC
+            AS_data_Join_Business_data
+        <include refid="conditions-as" />
+        ORDER BY
+            UserID DESC, BYEAR DESC
+        LIMIT #{pagination.limitStart}, #{size}
     </select>
+    <!-- 엑셀 다운로드 용 전체 조회 / 전체 조회하여 데이터 return 하므로 page 없음 -->
+    <select id="selectASdataJoinBusinessDataForExcelDownload" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="AsDataAndBusinessDataResultMap">
+        SELECT
+            *
+        FROM
+        AS_data_Join_Business_data
+        <include refid="conditions-as" />
+        ORDER BY
+            UserID ASC, BYEAR ASC
+    </select>
+
+
 </mapper>
