@@ -112,8 +112,6 @@ function MainController(
         } else if ($scope.global.pageName === 'map') {
             loadKAKAOMap();
             getSearchFilter();
-            /* 다른 페이지에서 넘어오는 파라미터가 없을 경우 사이즈값 200으로 고정 */
-            if($scope.global.parameterChk == undefined || $scope.global.parameterChk == null || $scope.global.parameterChk == '') $scope.searchDto.size = 200;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         } else if($scope.global.pageName === 'business'){
             getMinMaxYear();
@@ -163,30 +161,6 @@ function MainController(
         newWindow ?
             $window.open($scope.global.baseurl + path, newWindow, option) :
             $window.location.href = $scope.global.baseurl + path;
-    };
-    $scope.moveToMap = function (searchDto) {
-        let url = "/map?";
-        if(searchDto.searchFilter.BNAME != '사업명'){
-            if(url.charAt(url.length - 1) == '?') url += '&'
-            url += 'BNAME=' + searchDto.searchFilter.BNAME;
-        }
-        if(searchDto.searchFilter.facilityType != '사업명') {
-            if(url.charAt(url.length - 1) == '?') url += '&'
-            url += 'facilityType=' + searchDto.searchFilter.facilityType;
-        }
-        if(searchDto.searchFilter.energy != '사업명'){
-            if(url.charAt(url.length - 1) == '?') url += '&'
-            url += 'energy=' + searchDto.searchFilter.energy;
-        }
-        if(searchDto.searchFilter.BYEAR != '사업명') {
-            if(url.charAt(url.length - 1) == '?') url += '&'
-            url += 'BYEAR=' + searchDto.searchFilter.BYEAR;
-        }
-        if(searchDto.searchFilter.sigungu != '사업명') {
-            if(url.charAt(url.length - 1) == '?') url += '&'
-            url += 'sigungu=' + searchDto.searchFilter.sigungu;
-        }
-        $window.location.href = url;
     };
 
     $scope.copy_to_clipboard = function () {
