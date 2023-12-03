@@ -112,14 +112,15 @@ function MainController(
         } else if ($scope.global.pageName === 'map') {
             loadKAKAOMap();
             getSearchFilter();
-            $scope.searchDto.size = 200;
+            /* 다른 페이지에서 넘어오는 파라미터가 없을 경우 사이즈값 200으로 고정 */
+            if($scope.global.parameterChk == undefined || $scope.global.parameterChk == null || $scope.global.parameterChk == '') $scope.searchDto.size = 200;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         } else if($scope.global.pageName === 'business'){
             getMinMaxYear();
             getSearchFilter();
-            $scope.searchDto.searchFilter.BNAME = '주택지원';
-            $scope.searchDto.searchFilter.facilityType = '주택';
-            $scope.searchDto.searchFilter.energy = '태양광';
+            // $scope.searchDto.searchFilter.BNAME = '주택지원';
+            // $scope.searchDto.searchFilter.facilityType = '주택';
+            // $scope.searchDto.searchFilter.energy = '태양광';
             $scope.getSearchBusinessDataList($scope.searchDto);
         } else if($scope.global.pageName =='as'){
             getMinMaxYear();
@@ -162,6 +163,30 @@ function MainController(
         newWindow ?
             $window.open($scope.global.baseurl + path, newWindow, option) :
             $window.location.href = $scope.global.baseurl + path;
+    };
+    $scope.moveToMap = function (searchDto) {
+        let url = "/map?";
+        if(searchDto.searchFilter.BNAME != '사업명'){
+            if(url.charAt(url.length - 1) == '?') url += '&'
+            url += 'BNAME=' + searchDto.searchFilter.BNAME;
+        }
+        if(searchDto.searchFilter.facilityType != '사업명') {
+            if(url.charAt(url.length - 1) == '?') url += '&'
+            url += 'facilityType=' + searchDto.searchFilter.facilityType;
+        }
+        if(searchDto.searchFilter.energy != '사업명'){
+            if(url.charAt(url.length - 1) == '?') url += '&'
+            url += 'energy=' + searchDto.searchFilter.energy;
+        }
+        if(searchDto.searchFilter.BYEAR != '사업명') {
+            if(url.charAt(url.length - 1) == '?') url += '&'
+            url += 'BYEAR=' + searchDto.searchFilter.BYEAR;
+        }
+        if(searchDto.searchFilter.sigungu != '사업명') {
+            if(url.charAt(url.length - 1) == '?') url += '&'
+            url += 'sigungu=' + searchDto.searchFilter.sigungu;
+        }
+        $window.location.href = url;
     };
 
     $scope.copy_to_clipboard = function () {
@@ -269,12 +294,19 @@ function MainController(
     }
 
     function getSearchFilterChangeForRadio(group, id){
+        let s = '';
+        let chk = true;
+        if(document.getElementById(id).nextElementSibling.textContent == '전체') chk = false;
+
         if(group == 'bname'){
-            $scope.searchDto.searchFilter.BNAME = document.getElementById(id).nextElementSibling.textContent;
+            chk ? $scope.searchDto.searchFilter.BNAME = document.getElementById(id).nextElementSibling.textContent
+                : $scope.searchDto.searchFilter.BNAME = s;
         } else if(group == 'facilityType'){
-            $scope.searchDto.searchFilter.facilityType = document.getElementById(id).nextElementSibling.textContent;
+            chk ? $scope.searchDto.searchFilter.facilityType = document.getElementById(id).nextElementSibling.textContent
+                : $scope.searchDto.searchFilter.facilityType = s;
         } else if(group == 'energy'){
-            $scope.searchDto.searchFilter.energy = document.getElementById(id).nextElementSibling.textContent;
+            chk ? $scope.searchDto.searchFilter.energy = document.getElementById(id).nextElementSibling.textContent
+                : $scope.searchDto.searchFilter.energy = s;
         }
     }
 

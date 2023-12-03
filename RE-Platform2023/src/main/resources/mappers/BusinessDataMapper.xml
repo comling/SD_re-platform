@@ -133,7 +133,7 @@
                 <if test="searchFilter.sigungu.equals('') == false">
                     AND Sigungu = #{searchFilter.sigungu}
                 </if>
-                <if test="searchFilter.eupMyeon.equals('') == false">
+                <if test="searchFilter.eupMyeon != null and searchFilter.eupMyeon.equals('') == false">
                     AND EupMyeon = #{searchFilter.eupMyeon}
                 </if>
             </if>
