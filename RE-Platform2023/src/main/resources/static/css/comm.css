@@ -150,13 +150,16 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
     width: 0; /* 0 width - change this with JavaScript */
     position: absolute; /* Stay in place */
     z-index: 2; /* Stay on top */
+    background-color: rgb(255, 255, 255);
+    /*padding: 2px;*/
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 2px 0px;
     /*left:calc(50% - 600px);*/
     top:260px;
     /*top: 0; !* Stay at the top *!*/
     /*left: 0;*/
-    background-color: #ffffff; /* white*/
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    /*padding-top: 60px; !* Place content 60px from the top *!*/
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
@@ -192,7 +195,7 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
     /*left:calc(50% - 600px);*/
     margin: auto;
     width: 22px;
-    height: 137px;
+    height: 200px;
     font-size: 0;
     line-height: 0;
     background:url('../img/open.png') no-repeat 0 0;
