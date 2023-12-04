@@ -89,12 +89,14 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .main-content .main-card-sector-notice > .notice-footer {text-align: center;}
 
 .height-60 {height: 60px;}
+.h-200 {height: 200px !important;}
 .mg-top10 {margin-top: 10px;}
 .mg-btm10 {margin-bottom: 10px;}
 .mg-left10 {margin-left: 10px;}
 .mg-left30 {margin-left: 30px;}
 .text-right {text-align: right;}
 .w-300 {width: 300px !important;}
+.w-150 {width: 150px !important;}
 .w1200{max-width:1200px; margin:0 auto; box-sizing:border-box; padding:0 25px; min-width: 1000px;}
 .mg-btm20 {margin-bottom: 20px;}
 
@@ -109,6 +111,11 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .basicTable table tbody th {background: #f9f9f9; border-bottom:1px solid #e5e5e5; color:#444; font-size:0.875rem; padding-left:15px;}
 .basicTable table tbody td .input_style {height:34px; margin:0 1px;}
 .basicTable table tbody td .btn {padding: 0 10px}
+
+.subTable {}
+.subTable thead th {font-size:0.7125rem;}
+.subTable tbody td {font-size:0.58rem;}
+.right {text-align:right;}
 
 .loading {display:none;width: 100%;height: 100%;position: fixed;left: 0px;top: 0px;background: #fff;z-index: 9999;text-align: center;line-height: 100%;opacity: 0.8;}
 .loader {position: absolute;left: 50%;top: 55%;z-index: 11;width: 120px;height: 120px;margin: -76px 0 0 -76px;border: 16px solid #f3f3f3;border-radius: 50%;border-top: 16px solid #3498db;-webkit-animation: spin 2s linear infinite;animation: spin 2s linear infinite;}
@@ -136,6 +143,76 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .rowBtn {cursor: pointer;}
 .rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
 .rowBtn:hover > td{color: #007aff !important;}
+
+/* The side navigation menu */
+.sidenav {
+    height: 490px;
+    width: 0; /* 0 width - change this with JavaScript */
+    position: absolute; /* Stay in place */
+    z-index: 2; /* Stay on top */
+    /*left:calc(50% - 600px);*/
+    top:260px;
+    /*top: 0; !* Stay at the top *!*/
+    /*left: 0;*/
+    background-color: #ffffff; /* white*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.Shadow .toggle {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /*left:calc(50% - 600px);*/
+    margin: auto;
+    width: 22px;
+    height: 137px;
+    font-size: 0;
+    line-height: 0;
+    background:url('../img/open.png') no-repeat 0 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
 
 
 /* S : Modal */

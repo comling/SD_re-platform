@@ -73,6 +73,8 @@ function MainController(
         }
     }
 
+    $scope.displaySearchDto;
+
     angular.element(document).ready(function () {
         console.log("MainController.js is ready");
         $scope.global = {};
@@ -331,6 +333,9 @@ function MainController(
         }).then( function (result) {
             console.log("getSearchBusinessDataList : " , result);
             callback && callback(result);
+            if ($scope.global.pageName === 'map')
+                CASDetail(body);
+            $scope.displaySearchDto = angular.copy(searchDto);
             $scope.boardData = result.data;
             /* 데이터 없을 경우 result.data.params.pagination undefined로 return 받으므로 pagination 값 분기 적용 */
             if(result.data.params.pagination != undefined && result.data.params.pagination != null){
@@ -649,6 +654,37 @@ function MainController(
         const length = response.data.list.length
         setCenter(new kakao.maps.LatLng(y/length, x/length))
         showMarkers();
+    }
+
+
+    $scope.openSide = function () {
+        document.getElementById("sideNav").style.width = "400px";
+    }
+    $scope.closeSide = function () {
+        document.getElementById("sideNav").style.width = "0px";
+    }
+
+    $scope.energyKind = []
+    $scope.bnameKind = []
+
+    function CASDetail(body) {
+        const url = "/api/getCountAndSumCapacityDetail";
+        $http({
+            method: "POST",
+            url: url,
+            data: JSON.stringify(body),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        }).then( function (result) {
+            console.log("CASDetail result : " , result.data);
+            $scope.energyKind = result.data.energy;
+            $scope.bnameKind = result.data.bname;
+            console.log($scope.energyKind)
+            console.log($scope.bnameKind)
+
+        })
     }
 
     /**

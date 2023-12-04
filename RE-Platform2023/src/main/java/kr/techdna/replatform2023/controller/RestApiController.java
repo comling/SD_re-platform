@@ -72,6 +72,9 @@ public class RestApiController {
         return businessDataService.selectMainAggr();
     }
 
+    @PostMapping("/getCountAndSumCapacityDetail")
+    public Map<String, Object> getCASDetail(@RequestBody final SearchDto params) { return businessDataService.getAsDataAndBusinessDataListDetail(params); }
+
     /**
      * 전체 조회용 매서드
      * @param params

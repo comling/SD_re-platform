@@ -12,6 +12,8 @@ public interface BusinessDataMapper {
 
     int count(final SearchDto params);
     Map<String, Object> countAndSumCapacity(final SearchDto params);
+    List<cntKindDTO> energyCountAndSumCapacity(final SearchDto params);
+    List<cntKindDTO> bnameCountAndSumCapacity(final SearchDto params);
     List<TotDTO> selectMainAggr();
 
     List<ResBusinessData> getBusinessDataList(final SearchDto params);

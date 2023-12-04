@@ -63,10 +63,15 @@
                         <option selected>사업연도</option>
                         <option ng-repeat="item in onSearchFilter.BYEAR">{{item}}</option>
                     </select>
-                    <!-- 시/군구 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu">
+                    <!-- 시/군/구 -->
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu" ng-change="getEupMyeon(searchDto.searchFilter.sigungu)">
                         <option selected>시/군/구</option>
                         <option ng-repeat="item in onSearchFilter.sigungu">{{item}}</option>
+                    </select>
+                    <!-- 읍/면 -->
+                    <select ng-if="onSearchFilter.eupMyeon != undefined" class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.eupMyeon" ng-change="getSearchBusinessDataList(searchDto, addMarkerResponse)">
+                        <option selected>읍/면</option>
+                        <option ng-repeat="item in onSearchFilter.eupMyeon">{{item}}</option>
                     </select>
                 </div>
                 <div class="flex mg-left30 justify-content-end" style="width: 30%;">
@@ -78,44 +83,108 @@
         </div>
         <div class="main-bottom">
             <div id="map" style="width:1150px;height:800px;"></div>
-            <div class="flex" style="background:#ffffff;width:450px;height: 600px; position:absolute; left:calc(50% - 600px);top:260px;z-index:2;">
+            <div id="sideNav" class="sidenav flex"> <!-- style="background:#ffffff;width:420px;height: 488px; position:absolute; left:calc(50% - 600px);top:260px;z-index:2;"-->
+                <a href="javascript:void(0)" class="closebtn" ng-click="closeSide()">&times;</a>
                 <div style="margin:20px;">
                     <div class="justify_space_around">
-                        <div class="main-card-sector w-300">
-                            <h3 class="tit-main" style="color: black;font-size: x-large;">지역별 설치 현황 </h3>
-                            <div class="height-60 mg-left30 text-right">
-                                <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>
+                        <div class="mg-btm10">
+                            <h3 class="tit-main" style="color: black;font-size: x-large;">{{displaySearchDto.searchFilter.sigungu != '시/군/구' ? displaySearchDto.searchFilter.sigungu : '전체'}}
+                                {{displaySearchDto.searchFilter.eupMyeon != '읍/면' ? displaySearchDto.searchFilter.eupMyeon : ''}}</h3>
+<!--                            <div class="height-60 mg-left30 text-right">-->
+<!--                                <img th:src="@{/img/img_main_top.png}" style="width: 180px;"/>-->
+<!--                            </div>-->
+                        </div>
+                        <div class="flex">
+                            <div class="main-card-sector w-150">
+                                <h3 class="tit-main">총 설비 개소</h3>
+                                <span class="tit-sub">{{displaySearchDto.searchFilter.sigungu != '시/군/구' ? displaySearchDto.searchFilter.sigungu : '전체'}} {{displaySearchDto.searchFilter.eupMyeon != '읍/면' ? displaySearchDto.searchFilter.eupMyeon : ''}}<br>총 설치 현황</span>
+                                <div class="flex flex-end total-area">
+                                    <div>
+                                        <p>{{ pagination.total | number }}<span> 개소</span></p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-end total-area">
+                                    <div>
+                                        <span>조회기간 </span>
+                                        <span ng-if="displaySearchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                                        <span ng-if="displaySearchDto.searchFilter.BYEAR != '사업연도' "> {{displaySearchDto.searchFilter.BYEAR}} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main-card-sector mg-left10 w-150">
+                                <h3 class="tit-main">총 설비 용량</h3>
+                                <span class="tit-sub">{{displaySearchDto.searchFilter.sigungu != '시/군/구' ? displaySearchDto.searchFilter.sigungu : '전체'}} {{displaySearchDto.searchFilter.eupMyeon != '읍/면' ? displaySearchDto.searchFilter.eupMyeon : ''}}<br>총 발전 현황</span>
+                                <div class="flex flex-end total-area">
+                                    <div>
+                                        <p>{{ pagination.totalSumCapacity | number:2 }}<span> kWp</span></p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-end total-area">
+                                    <div>
+                                        <span>조회기간</span>
+                                        <span ng-if="displaySearchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                                        <span ng-if="displaySearchDto.searchFilter.BYEAR != '사업연도' "> {{displaySearchDto.searchFilter.BYEAR}} </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="main-card-sector w-300">
-                            <h3 class="tit-main">총 설비 개소</h3>
-                            <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>
-                            <div class="flex flex-end total-area height-60">
-                                <span>조회기간 </span>
-                                <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                                <p>
-                                    <img th:src="@{/img/img_solarPn.png}"/>
-                                    {{ pagination.total | number}}
-                                </p>
-                                <span> 개소</span>
+                        <div class="flex">
+                            <div class="main-card-sector w-150 h-200">
+                                <h3 class="tit-main">에너지원</h3>
+                                <table class="subTable w-150">
+                                    <colgroup>
+                                        <col width="30%">
+                                        <col width="35%">
+                                        <col width="35%">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>구분</th>
+                                        <th>설비개소</th>
+                                        <th>설비용량</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in energyKind">
+                                        <td>{{ item.kind }}</td>
+                                        <td class="right">{{ item.count | number}}개소</td>
+                                        <td class="right">{{ item.sum | number : 1}}kW</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                        <div class="main-card-sector w-300">
-                            <h3 class="tit-main">총 설비 용량</h3>
-                            <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>
-                            <div class="flex flex-end total-area height-60">
-                                <span>조회기간</span>
-                                <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                                <p>
-                                    <img th:src="@{/img/img_house.png}"/>
-                                    {{ pagination.totalSumCapacity | number:2 }}
-                                </p>
-                                <span> kWp</span>
+                            <div class="main-card-sector mg-left10 w-150 h-200">
+                                <h3 class="tit-main">사업별</h3>
+                                <table class="subTable w-150">
+                                    <colgroup>
+                                        <col width="30%">
+                                        <col width="35%">
+                                        <col width="35%">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>구분</th>
+                                        <th>설비개소</th>
+                                        <th>설비용량</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in bnameKind">
+                                        <td>{{ item.kind }}</td>
+                                        <td class="right">{{ item.count | number}}개소</td>
+                                        <td class="right">{{ item.sum | number : 1}}kW</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="Shadow">
+                <span class="toggle" ng-click="openSide()"></span>
+            </div>
+
         </div>
 
 

@@ -223,6 +223,23 @@ public class BusinessDataService {
         return response;
     }
 
+    /* 에너지원별 사업별 상세 내용 불러오기*/
+    public Map<String, Object> getAsDataAndBusinessDataListDetail(SearchDto params){
+        Map<String, Object> response = new HashMap<>();
+
+        // 게시글 리스트 조회
+        List<cntKindDTO> energyCountAndSumCapacity = businessDataMapper.energyCountAndSumCapacity(params);
+
+//        System.out.println(energyCountAndSumCapacity);
+
+        List<cntKindDTO> bnameCountAndSumCapacity = businessDataMapper.bnameCountAndSumCapacity(params);
+        // 데이터 반환
+        response.put("params", params);
+        response.put("energy", energyCountAndSumCapacity);
+        response.put("bname", bnameCountAndSumCapacity);
+        return response;
+    }
+
     /* Excel download */
     public void excelDataDownload(List<ResBusinessData> list, HttpServletResponse response) throws IOException {
 

@@ -200,6 +200,27 @@
         <include refid="conditions-sub" />
     </select>
 
+    <!-- 에너지원별 용량 조회 -->
+    <select id="energyCountAndSumCapacity" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="kr.techdna.replatform2023.dto.cntKindDTO">
+        SELECT
+            Energy as kind, COUNT(UserID) as count, SUM(Capacity) as sum
+        FROM
+            Business_data
+        <include refid="conditions-sub" />
+        GROUP BY Energy
+    </select>
+
+    <!-- 사업별 용량 조회 -->
+    <select id="bnameCountAndSumCapacity" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultType="kr.techdna.replatform2023.dto.cntKindDTO">
+        SELECT
+            BNAME as kind, COUNT(UserID) as count, SUM(Capacity) as sum
+        FROM
+            Business_data
+        <include refid="conditions-sub" />
+        GROUP BY
+            BNAME DESC
+    </select>
+
     <!-- 게시글 리스트 조회 -->
     <select id="getBusinessDataList" parameterType="kr.techdna.replatform2023.dto.SearchDto" resultMap="BusinessDataResultMap">
         SELECT
