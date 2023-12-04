@@ -3,6 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block layout:fragment="content">
     <input type="hidden" name="pageName" th:value="${pageName}">
+    <input type="hidden" name="BNAME" th:value="${BNAME}">
+    <input type="hidden" name="BYEAR" th:value="${BYEAR}">
+    <input type="hidden" name="energy" th:value="${energy}">
+    <input type="hidden" name="facilityType" th:value="${facilityType}">
+    <input type="hidden" name="sigungu" th:value="${sigungu}">
+    <input type="hidden" name="keyword" th:value="${keyword}">
 
 
     <div class="main-content w1200">
@@ -82,7 +88,7 @@
             </div>
         </div>
         <div class="main-bottom">
-            <div id="map" style="width:1150px;height:800px;"></div>
+            <div id="map" style="height:800px;"></div>
             <div id="sideNav" class="sidenav flex"> <!-- style="background:#ffffff;width:420px;height: 488px; position:absolute; left:calc(50% - 600px);top:260px;z-index:2;"-->
                 <a href="javascript:void(0)" class="closebtn" ng-click="closeSide()">&times;</a>
                 <div style="margin:20px;">

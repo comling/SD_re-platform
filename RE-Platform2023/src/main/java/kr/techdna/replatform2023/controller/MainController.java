@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 @Controller
 public class MainController {
 
@@ -42,8 +44,21 @@ public class MainController {
     }
 
     @RequestMapping("/map")
-    public ModelAndView map(){
+    public ModelAndView map(@RequestParam(required = false) String keyword,
+                            @RequestParam(required = false) String BNAME,
+                            @RequestParam(required = false) Integer BYEAR,
+                            @RequestParam(required = false) String energy,
+                            @RequestParam(required = false) String facilityType,
+                            @RequestParam(required = false) String sigungu){
         ModelAndView mav = new ModelAndView();
+
+        if(keyword != null ) mav.addObject("keyword", keyword);
+        if(BNAME != null ) mav.addObject("BNAME", BNAME);
+        if(BYEAR != null ) mav.addObject("BYEAR", BYEAR);
+        if(energy != null ) mav.addObject("energy", energy);
+        if(facilityType != null ) mav.addObject("facilityType", facilityType);
+        if(sigungu != null ) mav.addObject("sigungu", sigungu);
+
         mav.addObject("pageName", "map");
         mav.setViewName("map");
         return mav;
