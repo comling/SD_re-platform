@@ -17,26 +17,34 @@
                 <h3 class="tit-main">총 설비 개소</h3>
                 <span class="tit-sub">경기도 총 설치 현황</span>
                 <div class="flex flex-end total-area height-60">
-                    <span>조회기간 </span>
-                    <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                    <p>
-                        <img th:src="@{/img/img_solarPn.png}"/>
-                        {{ pagination.total | number}}
-                    </p>
-                    <span> 개소</span>
+                    <div>
+                        <span>조회기간 </span>
+                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
+                    </div>
+                    <div>
+                        <p>
+                            <img th:src="@{/img/img_solarPn.png}"/>
+                            {{ pagination.total | number}}
+                        </p>
+                        <span> 개소</span>
+                    </div>
                 </div>
             </div>
             <div class="main-card-sector">
                 <h3 class="tit-main">총 설비 용량</h3>
                 <span class="tit-sub">경기도 총 발전 현황</span>
                 <div class="flex flex-end total-area height-60">
-                    <span>조회기간</span>
-                    <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                    <p>
-                        <img th:src="@{/img/img_house.png}"/>
-                        {{ pagination.totalSumCapacity | number:2 }}
-                    </p>
-                    <span> kWp</span>
+                    <div>
+                        <span>조회기간</span>
+                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
+                    </div>
+                    <div>
+                        <p>
+                            <img th:src="@{/img/img_house.png}"/>
+                            {{ pagination.totalSumCapacity | number:2 }}
+                        </p>
+                        <span> kWp</span>
+                    </div>
                 </div>
             </div>
             <div class="main-card-sector main-card-sector-notice">
@@ -77,7 +85,8 @@
                         <tr ng-if="boardData.list.length === 0">
                             <td colspan="4">검색 결과 없음</td>
                         </tr>
-                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" style="line-height: 170%;">
+                        <tr ng-repeat="item in boardData.list | limitTo: boardData.params.size" style="line-height: 170%;"
+                            ng-click="moveTo('local?sigungu=' + item.sigungu)" class="rowBtn">
                             <td>{{item.sigungu}}</td>
                             <td>{{item.cnt | number}}</td>
                             <td>{{item.sum | number:2}} <span>kWp</span></td>

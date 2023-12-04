@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <th:block layout:fragment="content">
         <input type="hidden" name="pageName" th:value="${pageName}">
+        <input type="hidden" name="sigungu" th:value="${sigungu}">
         <style>
             .businessTable th:nth-child(1), td:nth-child(1){width: 75px;}
             .businessTable th:nth-child(2), td:nth-child(2){width: 110px;}
@@ -12,10 +13,6 @@
             .businessTable th:nth-child(6), td:nth-child(6){width: 140px;}
             .businessTable th:nth-child(7), td:nth-child(7){width: 140px;}
             .businessTable th:nth-child(8), td:nth-child(8){width: 300px;}
-
-            .rowBtn {cursor: pointer;}
-            .rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
-            .rowBtn:hover > td{color: #007aff !important;}
         </style>
 
     <div class="main-content w1200">
@@ -29,28 +26,32 @@
                 </div>
                 <div class="main-card-sector mg-left30 w-300">
                     <h3 class="tit-main">총 설비 개소</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 설치 현황</span>
+                    <span class="tit-sub">{{searchDto.searchFilter.sigungu != '시/군/구' ? searchDto.searchFilter.sigungu : '전체'}} 총 설치 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간 </span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                        <p>
-                            <img th:src="@{/img/img_solarPn.png}"/>
-                            {{ pagination.total | number}}
-                        </p>
-                        <span> 개소</span>
+                        <div>
+                            <span>조회기간 </span>
+                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
+                        </div>
+                        <div>
+                            <p><img th:src="@{/img/img_solarPn.png}"/>{{ pagination.total | number }}</p>
+                            <span> 개소</span>
+                        </div>
                     </div>
                 </div>
                 <div class="main-card-sector mg-left30 w-300">
                     <h3 class="tit-main">총 설비 용량</h3>
-                    <span class="tit-sub">{{searchDto.searchFilter.BNAME != '사업명' ? searchDto.searchFilter.BNAME : '전체'}} 총 발전 현황</span>
+                    <span class="tit-sub">{{searchDto.searchFilter.sigungu != '시/군/구' ? searchDto.searchFilter.sigungu : '전체'}} 총 발전 현황</span>
                     <div class="flex flex-end total-area height-60">
-                        <span>조회기간</span>
-                        <span>{{yearData.min}} ~ {{yearData.max}}</span>
-                        <p>
-                            <img th:src="@{/img/img_house.png}"/>
-                            {{ pagination.totalSumCapacity | number:2 }}
-                        </p>
-                        <span> kWp</span>
+                        <div>
+                            <span>조회기간</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR == '사업연도' ">{{yearData.min}} ~ {{yearData.max}}</span>
+                            <span ng-if="searchDto.searchFilter.BYEAR != '사업연도' "> {{searchDto.searchFilter.BYEAR}} </span>
+                        </div>
+                        <div>
+                            <p><img th:src="@{/img/img_house.png}"/>{{ pagination.totalSumCapacity | number:2 }}</p>
+                            <span> kWp</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,27 +59,27 @@
             <div class="flex search-filter-box">
                 <div class="flex" style="width: 70%;">
                     <!-- 사업명 -->
-                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME">
+                    <select class="input_style search-filter-sel" ng-model="searchDto.searchFilter.BNAME" ng-change="getSearchBusinessDataList(searchDto)">
                         <option selected>사업명</option>
                         <option ng-repeat="item in onSearchFilter.BNAME">{{item}}</option>
                     </select>
                     <!-- 시설구분 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.facilityType" ng-change="getSearchBusinessDataList(searchDto)">
                         <option selected>시설구분</option>
                         <option ng-repeat="item in onSearchFilter.facilityType">{{item}}</option>
                     </select>
                     <!-- 에너지원 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.energy" ng-change="getSearchBusinessDataList(searchDto)">
                         <option selected>에너지원</option>
                         <option ng-repeat="item in onSearchFilter.energy">{{item}}</option>
                     </select>
                     <!-- 사업연도 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.BYEAR" ng-change="getSearchBusinessDataList(searchDto)">
                         <option selected>사업연도</option>
                         <option ng-repeat="item in onSearchFilter.BYEAR">{{item}}</option>
                     </select>
                     <!-- 시/군구 -->
-                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu">
+                    <select class="input_style search-filter-sel mg-left10" ng-model="searchDto.searchFilter.sigungu" ng-change="getSearchBusinessDataList(searchDto)">
                         <option selected>시/군/구</option>
                         <option ng-repeat="item in onSearchFilter.sigungu">{{item}}</option>
                     </select>
@@ -94,7 +95,7 @@
         <div class="main-bottom">
             <div class="flex justify_between mg-btm10">
                 <button class="btn"><i class="far fa-compass"></i>&nbsp;&nbsp;지도보기</button>
-                <button class="btn" ng-click="excelDownload(searchDto)"><i class="fas fa-table"></i>&nbsp;&nbsp;내려받기</button>
+                <button class="btn" ng-click="excelDownload(searchDto, 'local')"><i class="fas fa-table"></i>&nbsp;&nbsp;내려받기</button>
             </div>
             <div class="basicTable">
                 <table class="table businessTable">

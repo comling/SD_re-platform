@@ -30,8 +30,11 @@
             </a>
         </div>
         <h6 class="pageNum">
-            <span class="pagination_search_title1" style="font-size: 14px;">
+            <span ng-if="$ctrl.pageName != 'as' || $ctrl.pageName != 'business' || $ctrl.pageName == undefined" class="pagination_search_title1" style="font-size: 14px;">
                 총 : <b ng-bind="$ctrl.total | number"></b> 개소, <b ng-bind="$ctrl.totalSumCapacity | number:2"></b> kWp
+            </span>
+            <span ng-if="$ctrl.pageName == 'as'" class="pagination_search_title1" style="font-size: 14px;">
+                총 : <b ng-bind="$ctrl.total | number"></b> 건
             </span>
         </h6>
     </div>

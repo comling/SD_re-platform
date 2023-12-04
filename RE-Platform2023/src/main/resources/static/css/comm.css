@@ -67,14 +67,17 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .main-content .main-top {height: 310px; margin-top: 20px;}
 .main-content .main-bottom {height: calc(100% - 350px);}
 
-.main-content .main-card-sector {border: 1px solid #656565; border-radius: 10px; width: 280px; height: 120px; padding: 10px; margin-bottom: 15px;}
+.main-content .main-card-sector {border: 1px solid #656565; border-radius: 10px; width: 290px; height: 120px; padding: 10px; margin-bottom: 15px;}
 .main-content .main-card-sector > .tit-main { color:#0f53a8; margin-bottom: 5px;}
 .main-content .main-card-sector > .tit-sub { font-weight: 600; font-size: 15px; margin-bottom: 5px;}
-.main-content .main-card-sector > .total-area > span {margin: 5px;}
-.main-content .main-card-sector > .total-area > span:nth-child(1), span:nth-child(2) {font-size: 10px;}
-.main-content .main-card-sector > .total-area > span:nth-child(4) {font-size: 13px; font-weight: 700; color: black;}
-.main-content .main-card-sector > .total-area > p {font-size:20px; font-weight: 700; color: black;}
-.main-content .main-card-sector > .total-area > p > img{width: 50px;}
+.main-content .main-card-sector > div:nth-child(3) { margin-top: 10px;}
+.main-content .main-card-sector > .total-area > div:nth-child(1) {width: 120px; min-width: 120px;}
+.main-content .main-card-sector > .total-area > div:nth-child(1) > span {margin: 5px;}
+.main-content .main-card-sector > .total-area > div:nth-child(1) > span:nth-child(1), span:nth-child(2) {font-size: 10px;}
+.main-content .main-card-sector > .total-area > div:nth-child(2) {width: calc(100% - 120px); display: flex; align-items: flex-end;}
+.main-content .main-card-sector > .total-area > div:nth-child(2) > span:nth-child(2) {font-size: 13px; font-weight: 700; color: black;}
+.main-content .main-card-sector > .total-area > div:nth-child(2) > p {font-size:20px; font-weight: 700; color: black;}
+.main-content .main-card-sector > .total-area > div:nth-child(2)> p > img{width: 50px;}
 
 .main-content .main-card-sector-notice {height: 280px;}
 .main-content .main-card-sector-notice > .tit-main{ color: black; margin-bottom: 5px;}
@@ -130,6 +133,9 @@ footer > .slider-container .slider-wrapper .slide{width:200px;height:30px;displa
 .btn-blue{color: white; background-color: #1d55a3;border: none; width: 50px; cursor: pointer;}
 .btn-blue:hover{opacity: 80%;}
 
+.rowBtn {cursor: pointer;}
+.rowBtn:hover {color: #007aff; opacity: 80%; font-size: large;}
+.rowBtn:hover > td{color: #007aff !important;}
 
 
 /* S : Modal */
