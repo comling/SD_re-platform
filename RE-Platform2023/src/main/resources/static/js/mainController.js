@@ -116,6 +116,12 @@ function MainController(
             getMinMaxYear();
             getSearchFilter();
             $scope.searchDto.size = 1000;
+            if($scope.global.BNAME != "" && $scope.global.BNAME != null) $scope.searchDto.searchFilter.BNAME = $scope.global.BNAME;
+            if($scope.global.BYEAR != "" && $scope.global.BYEAR != null) $scope.searchDto.searchFilter.BYEAR = $scope.global.BYEAR;
+            if($scope.global.energy != "" && $scope.global.energy != null) $scope.searchDto.searchFilter.energy = $scope.global.energy;
+            if($scope.global.facilityType != "" && $scope.global.facilityType != null) $scope.searchDto.searchFilter.facilityType = $scope.global.facilityType;
+            if($scope.global.sigungu != "" && $scope.global.sigungu != null) $scope.searchDto.searchFilter.sigungu = $scope.global.sigungu;
+            if($scope.global.keyword != "" && $scope.global.keyword != null) $scope.searchDto.keyword = $scope.searchDto.keyword;
             $scope.getSearchBusinessDataList($scope.searchDto, $scope.addMarkerResponse);
         } else if($scope.global.pageName === 'business'){
             getMinMaxYear();
@@ -667,6 +673,31 @@ function MainController(
         showMarkers();
     }
 
+    $scope.moveMap = function(searchDto){
+        console.log(searchDto);
+
+        let url = "/map?keyword=" + searchDto.keyword + '&';
+
+        for(const key in searchDto.searchFilter) {
+            const s = searchDto.searchFilter[key];
+            if(s != '사업명' && s != '시설구분' && s != '에너지원' && s != '사업연도' && s != '시/군/구' && s != '읍/면'){
+                url = chkChar(url) + key + '=' + searchDto.searchFilter[key] + '&';
+            }
+            console.log("url : ", url);
+        }
+
+        if(url.charAt(url.length - 1) == '&') url = url.substring(0, url.length-1);
+        console.log(url);
+
+        function chkChar(url){
+            if(url.charAt(url.length - 1) == '?') {
+                return url += '&';
+            } else {
+                return url;
+            }
+        }
+        $window.location.href = url;
+    }
 
     $scope.openSide = function () {
         document.getElementById("sideNav").style.width = "400px";

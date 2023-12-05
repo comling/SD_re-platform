@@ -3,75 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block layout:fragment="content">
     <input type="hidden" name="pageName" th:value="${pageName}">
-<style>
-    .h-200 {height: 200px !important;}
-    .w-150 {width: 150px !important;}
 
-    .sidenav {
-        height: 490px;
-        width: 0;
-        position: absolute;
-        z-index: 2;
-        background-color: rgb(255, 255, 255);
-        border-radius: 3px;
-        box-shadow: rgba(0, 0, 0, 0.15) 0 2px 2px 0;
-        top:260px;
-        overflow-x: hidden;
-        transition: 0.5s;
-    }
-
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    .sidenav a:hover {
-        color: #f1f1f1;
-    }
-
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
-
-    .Shadow .toggle {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        width: 22px;
-        height: 200px;
-        font-size: 0;
-        line-height: 0;
-        background:url('../img/open.png') no-repeat 0 0;
-        text-indent: -9999px;
-        cursor: pointer;
-        z-index: 1;
-    }
-    .subTable {}
-    .subTable thead th {font-size:0.7125rem;}
-    .subTable tbody td {font-size:0.58rem;}
-    .right {text-align:right;}
-
-    #main {
-        transition: margin-left .5s;
-        padding: 20px;
-    }
-
-    @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
-    }
-
-</style>
+    <input type="hidden" name="BNAME" th:value="${BNAME}">
+    <input type="hidden" name="BYEAR" th:value="${BYEAR}">
+    <input type="hidden" name="energy" th:value="${energy}">
+    <input type="hidden" name="facilityType" th:value="${facilityType}">
+    <input type="hidden" name="sigungu" th:value="${sigungu}">
+    <input type="hidden" name="keyword" th:value="${keyword}">
 
     <div class="main-content w1200">
         <div class="main-top" style="height: 60px;">
@@ -150,7 +88,7 @@
             </div>
         </div>
         <div class="main-bottom">
-            <div id="map" style="width:1150px;height:800px;"></div>
+            <div id="map" style="height:800px;"></div>
             <div id="sideNav" class="sidenav flex"> <!-- style="background:#ffffff;width:420px;height: 488px; position:absolute; left:calc(50% - 600px);top:260px;z-index:2;"-->
                 <a href="javascript:void(0)" class="closebtn" ng-click="closeSide()">&times;</a>
                 <div style="margin:20px;">
